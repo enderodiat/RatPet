@@ -25,7 +25,7 @@ namespace Project1
             this.scale = Helper.GetScale(this.position.Y, this.window, this.defaultScale, this.padding);
         }
 
-        public bool Colision(Visual visual)
+        public bool Collision(Visual visual)
         {
             return this.Rectangle.Intersects(visual.Rectangle);
         }

@@ -66,7 +66,7 @@ namespace Project1
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-            if (!cheese.Colision(rat))
+            if (!cheese.Collision(rat))
             {
                 cheese.Draw(_spriteBatch);
             }
@@ -80,6 +80,6 @@ namespace Project1
 
             _spriteBatch.End();
             base.Draw(gameTime);
-        }
+        } 
     }
 }
