@@ -18,12 +18,18 @@ namespace Project1
         private Texture2D textureS2;
         private Texture2D textureW1;
         private Texture2D textureW2;
+        private Texture2D textureX1;
+        private Texture2D textureX2;
+        private Texture2D textureX3;
+        private Texture2D textureX4;
         private int topFramesAnimation;
         private int framesAnimation = 0;
         private char direction = 'd';
         private char lastdirection = 'd';
         internal float speed;
         internal float defaultSpeed;
+        private bool lookingLeft = false;
+        private bool idle = false;
 
         public MovingVisual(Vector2 position, Texture2D texture, int topframes, float scaleFactor = 1,  float speed = 0) : base(position, texture, scaleFactor)
         {
@@ -32,7 +38,7 @@ namespace Project1
             this.topFramesAnimation = topframes;
         }
 
-        public void LoadTextures(Texture2D D1, Texture2D D2, Texture2D S1, Texture2D S2, Texture2D W1, Texture2D W2)
+        public void LoadTextures(Texture2D D1, Texture2D D2, Texture2D S1, Texture2D S2, Texture2D W1, Texture2D W2, Texture2D X1, Texture2D X2, Texture2D X3, Texture2D X4)
         {
             this.textureD2 = D2;
             this.textureD1 = D1;
@@ -40,6 +46,10 @@ namespace Project1
             this.textureS2 = S2;
             this.textureW1 = W1;
             this.textureW2 = W2;
+            this.textureX1 = X1;
+            this.textureX2 = X2;
+            this.textureX3 = X3;
+            this.textureX4 = X4;
         }
 
         public virtual void Update(Box box)
@@ -48,58 +58,68 @@ namespace Project1
             {
                 UpdateBasics();
                 this.direction = 'w';
-                position.Y -= speed;
+                this.position.Y -= speed;
+                this.idle = false;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 UpdateBasics();
                 this.direction = 's';
-                position.Y += speed;
+                this.position.Y += speed;
+                this.idle = false;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 UpdateBasics();
                 this.direction = 'd';
-                position.X += speed;
+                this.position.X += speed;
+                this.lookingLeft = false;
+                this.idle = false;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 UpdateBasics();
-                position.X -= speed;
+                this.position.X -= speed;
                 this.direction = 'a';
+                this.lookingLeft = true;
+                this.idle = false;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space)){
+                UpdateBasics();
+                this.direction = 'x';
+                this.idle = true;
             }
             else
             {
-                framesAnimation = topFramesAnimation;
+                this.framesAnimation = this.topFramesAnimation;
                 if (this.direction != ' ')
                 {
                     this.lastdirection = this.direction;
                 }
                 this.direction = ' ';
             }
-            position = box.Collision(Rectangle);
+            this.position = box.Collision(this.Rectangle);
         }
 
         private void UpdateBasics()
         {
             this.lastdirection = this.direction;
-            framesAnimation++;
+            this.framesAnimation++;
         }
 
         public override void Draw(SpriteBatch spriteBatch, Texture2D texture = null)
         {
-            if (textureD1 != null)
+            if (this.textureD1 != null)
             {
-                bool flipTexture = (direction == 'a' || (lastdirection == 'a' && direction == ' '));
-                base.DrawCenter(spriteBatch, flipTexture, getNextTexture());
+                base.DrawCenter(spriteBatch, this.lookingLeft && !this.idle, getNextTexture());
             }
         }
 
         private Texture2D getNextTexture()
         {
-            if (direction != lastdirection || framesAnimation == topFramesAnimation)
+            if (this.direction != this.lastdirection || this.framesAnimation == this.topFramesAnimation)
             {
-                framesAnimation = 0;
+                this.framesAnimation = 0;
                 this.actualTexture = changeTextureDirection();
             }
             return this.actualTexture;
@@ -117,6 +137,16 @@ namespace Project1
                     return this.actualTexture == this.textureD1 ? this.textureD2 : this.textureD1;
                 case 'w':
                     return this.actualTexture == this.textureW1 ? this.textureW2 : this.textureW1;
+                case 'x':
+                    if (lookingLeft)
+                    {
+                        return this.actualTexture == this.textureX3 ? this.textureX4 : this.textureX3;
+                    }
+                    else
+                    {
+                        return this.actualTexture == this.textureX1 ? this.textureX2 : this.textureX1;
+                    }
+                        
             }
             return this.actualTexture;
         }

@@ -16,7 +16,11 @@ namespace Project1
                 content.Load<Texture2D>("rat7"),
                 content.Load<Texture2D>("rat8"),
                 content.Load<Texture2D>("rat9"),
-                content.Load<Texture2D>("rat10"));
+                content.Load<Texture2D>("rat10"),
+                content.Load<Texture2D>("rat23"),
+                content.Load<Texture2D>("rat24"),
+                content.Load<Texture2D>("rat25"),
+                content.Load<Texture2D>("rat26"));
             this.window = window;
         }
 
