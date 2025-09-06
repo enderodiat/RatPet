@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RatStates>
+	<RatState>
+		<!--GoingRight-->
+		<numState value="0"></numState>
+		<texture1 value="rat1"></texture1>
+		<texture2 value="rat2"></texture2>
+		<direction value="d"></direction>
+		<needToFlip value="false"></needToFlip>
+		<canMove value="true"></canMove>
+		<keyToActivate value="68"></keyToActivate>
+	</RatState>
+	<RatState>
+		<!--GoingLeft-->
+		<add Key="numState" value="1"></add>
+		<add key="texture1" value="rat1"></add>
+		<add key="texture2" value="rat2"></add>
+		<add key="direction" value="a"></add>
+		<add key="needToFlip" value="1"></add>
+		<add key="canMove" value="1"></add>
+		<add key="keyToActivate" value="65"></add>
+	</RatState>
+	<RatState>
+		<!--GoingUp-->
+		<add Key="numState" value="2"></add>
+		<add key="texture1" value="rat9"></add>
+		<add key="texture2" value="rat10"></add>
+		<add key="direction" value="w"></add>
+		<add key="needToFlip" value="0"></add>
+		<add key="canMove" value="1"></add>
+		<add key="keyToActivate" value="87"></add>
+	</RatState>
+	<RatState>
+		<!--GoingDown-->
+		<add Key="numState" value="3"></add>
+		<add key="texture1" value="rat7"></add>
+		<add key="texture2" value="rat8"></add>
+		<add key="direction" value="s"></add>
+		<add key="needToFlip" value="0"></add>
+		<add key="canMove" value="1"></add>
+		<add key="keyToActivate" value="83"></add>
+	</RatState>
+	<RatState>
+		<!--IdleRight-->
+		<add Key="numState" value="4"></add>
+		<add key="texture1" value="rat23"></add>
+		<add key="texture2" value="rat24"></add>
+		<add key="direction" value="d"></add>
+		<add key="needToFlip" value="0"></add>
+		<add key="canMove" value="0"></add>
+		<add key="keyToActivate" value="32"></add>
+	</RatState>
+	<RatState>
+		<!--IdleLeft-->
+		<add Key="numState" value="5"></add>
+		<add key="texture1" value="rat25"></add>
+		<add key="texture2" value="rat26"></add>
+		<add key="direction" value="a"></add>
+		<add key="needToFlip" value="0"></add>
+		<add key="canMove" value="0"></add>
+		<add key="keyToActivate" value="32"></add>
+	</RatState>
+</RatStates>

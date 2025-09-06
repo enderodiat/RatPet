@@ -16,8 +16,8 @@ namespace Project1
             {
                 if(!_rectangle.HasValue)
                 {
-                    int width = (int)((int)actualTexture.Width * scale);
-                    int height = (int)((int)actualTexture.Height * scale);
+                    int width = (int)(actualTexture.Width * scale);
+                    int height = (int)(actualTexture.Height * scale);
                     return new Rectangle(
                         (int)position.X - width/2,
                         (int)position.Y - height/2,

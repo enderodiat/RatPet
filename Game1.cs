@@ -2,7 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Configuration;
+using System.Data;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Xml.Linq;
 
 namespace Project1
 {
@@ -31,16 +36,18 @@ namespace Project1
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             int padding = int.Parse(ConfigurationManager.AppSettings["areaRatPadding"]);
+            int topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
             float scale = float.Parse(ConfigurationManager.AppSettings["defaultScale"]);
+            float defaultSpeed = float.Parse(ConfigurationManager.AppSettings["defaultSpeed"]);
 
             box = new Box(Content, padding, GraphicsDevice.Viewport);
 
             rat = new Rat(Content,
                 new Vector2(GraphicsDevice.Viewport.Width/2, GraphicsDevice.Viewport.Height/2),
-                int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]),
+                topFramesAnimation,
                 GraphicsDevice.Viewport,
                 scale,
-                float.Parse(ConfigurationManager.AppSettings["defaultSpeed"]));
+                defaultSpeed);
 
             cheese = new(Content, new Vector2(0,0), GraphicsDevice.Viewport, padding, scale);
             cheese.SetNewPosition();
