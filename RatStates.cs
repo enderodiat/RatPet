@@ -18,7 +18,7 @@ namespace Project1
             States = new List<RatState>();
             this.topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
             var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("Project1.States.xml"))
+            using (Stream stream = assembly.GetManifestResourceStream(fileName))
             {
                 XDocument doc = XDocument.Load(stream);
                 var states = doc.Descendants(typeof(RatState).Name);

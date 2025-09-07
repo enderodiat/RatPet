@@ -28,9 +28,7 @@ namespace Project1
                 {
                     return _rectangle.Value;
                 }
-                
             }
-
         }
 
         public Visual(Vector2 position, Texture2D texture, float scaleFactor = 1f, Rectangle? rectangle = null)
@@ -46,20 +44,20 @@ namespace Project1
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, Texture2D texture = null) {
-            spriteBatch.Draw(texture != null ? texture : actualTexture, Rectangle, Color.White);
+            spriteBatch.Draw(texture != null ? texture : this.actualTexture, Rectangle, Color.White);
         }
 
         public void DrawCenter(SpriteBatch spriteBatch, bool flipTexture, Texture2D texture = null)
         {
-            Texture2D texture2D = texture != null ? texture : actualTexture;
+            Texture2D texture2D = texture != null ? texture : this.actualTexture;
             spriteBatch.Draw(
                 texture2D,
-                position,
+                this.position,
                 null,
                 Color.White,
                 0f,
                 new Vector2(texture2D.Width/2, texture2D.Height/2),
-                scale,
+                this.scale,
                 flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                 0f);
         }

@@ -2,12 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Configuration;
-using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Xml.Linq;
 
 namespace Project1
 {
@@ -20,7 +15,7 @@ namespace Project1
         Box box;
         Cheese cheese;
 
-        public Game1()
+        public Game1() // TODO lavar
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -44,7 +39,6 @@ namespace Project1
 
             rat = new Rat(Content,
                 new Vector2(GraphicsDevice.Viewport.Width/2, GraphicsDevice.Viewport.Height/2),
-                topFramesAnimation,
                 GraphicsDevice.Viewport,
                 scale,
                 defaultSpeed);

@@ -1,37 +1,73 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Configuration;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Project1
 {
-    internal class Rat : MovingVisual
+    public class Rat : Visual
     {
+        internal float speed;
+        internal float defaultSpeed;
+        private RatStates ratStates;
         private Viewport window;
-        public Rat(ContentManager content, Vector2 position, int topFrames, Viewport window, float scaleFactor = 1, float speed = 0) : base(position, content.Load<Texture2D>("rat1"), topFrames, scaleFactor, speed)
+        private RatState actualState;
+
+        //Nota: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
+        //también debería hacer algo con las direcciones (clase enumerada o algo)
+        //y con la strings que uso para acceder al appsettings
+
+        public Rat(ContentManager content, Vector2 position, Viewport window, float scaleFactor = 1, float speed = 0, Texture2D texture = null) : base(position, texture, scaleFactor)
         {
-            base.LoadTextures(
-                content.Load<Texture2D>("rat1"), 
-                content.Load<Texture2D>("rat2"),
-                content.Load<Texture2D>("rat7"),
-                content.Load<Texture2D>("rat8"),
-                content.Load<Texture2D>("rat9"),
-                content.Load<Texture2D>("rat10"),
-                content.Load<Texture2D>("rat23"),
-                content.Load<Texture2D>("rat24"),
-                content.Load<Texture2D>("rat25"),
-                content.Load<Texture2D>("rat26"));
+            this.speed = speed;
+            this.defaultSpeed = speed;
+            this.ratStates = new RatStates();
+            this.ratStates.Load(ConfigurationManager.AppSettings["statesFileName"], content);
+            this.actualState = this.ratStates.States.Where(state => state.numState == Enums.State.goingRight).First();
+            this.actualTexture = this.actualState.GetTexture();
             this.window = window;
         }
 
-        public override void Update(Box box)
+        public virtual void Update(Box box)
         {
-            base.Update(box);
-            if (float.Parse(ConfigurationManager.AppSettings["perspective"]) != 0)
+            var keyPressed = Keyboard.GetState().GetPressedKeys().FirstOrDefault(Keys.X); // TODO: detectar tecla sobrepulsada
+            bool wasMoving = this.actualState.moving;
+            this.actualState = this.ratStates.States.Where(state => state.keyToActivate == keyPressed).FirstOrDefault(this.actualState);
+            this.actualState.moving = !(keyPressed == Keys.X);
+            this.actualState.wasMoving = wasMoving;
+            this.actualTexture = this.actualState.moving ? this.actualState.GetTexture() : this.actualTexture;
+            this.position = this.actualState.canMove && this.actualState.moving ? getPosition(this.actualState.direction, speed) : this.position;
+            this.position = box.Collision(this.Rectangle);
+            this.scale = Helper.GetScale(this.position.Y, this.window, this.defaultScale, box.margin); 
+        }
+
+        public override void Draw(SpriteBatch spriteBatch, Texture2D texture = null)
+        {
+            base.DrawCenter(spriteBatch, this.actualState.needToFlip, this.actualTexture);
+        }
+
+        private Vector2 getPosition(char direction, float speed)
+        {
+            switch (direction) // TODO: pasar directo a enum
             {
-                this.scale = Helper.GetScale(this.position.Y, this.window, this.defaultScale, box.margin);
-                //this.speed = Helper.GetSpeed(this.position.Y, this.window, this.defaultSpeed, box.margin);
+                case 'w':
+                    return new Vector2(this.position.X, this.position.Y - speed);
+                case 's':
+                    return new Vector2(this.position.X, this.position.Y + speed);
+                case 'd':
+                    return new Vector2(this.position.X + speed, this.position.Y);
+                case 'a':
+                    return new Vector2(this.position.X - speed, this.position.Y);
             }
+            return new Vector2(this.position.X, this.position.Y);
         }
     }
 }

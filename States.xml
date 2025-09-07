@@ -12,52 +12,52 @@
 	</RatState>
 	<RatState>
 		<!--GoingLeft-->
-		<add Key="numState" value="1"></add>
-		<add key="texture1" value="rat1"></add>
-		<add key="texture2" value="rat2"></add>
-		<add key="direction" value="a"></add>
-		<add key="needToFlip" value="1"></add>
-		<add key="canMove" value="1"></add>
-		<add key="keyToActivate" value="65"></add>
+		<numState value="1"></numState>
+		<texture1 value="rat1"></texture1>
+		<texture2 value="rat2"></texture2>
+		<direction value="a"></direction>
+		<needToFlip value="true"></needToFlip>
+		<canMove value="true"></canMove>
+		<keyToActivate value="65"></keyToActivate>
 	</RatState>
 	<RatState>
 		<!--GoingUp-->
-		<add Key="numState" value="2"></add>
-		<add key="texture1" value="rat9"></add>
-		<add key="texture2" value="rat10"></add>
-		<add key="direction" value="w"></add>
-		<add key="needToFlip" value="0"></add>
-		<add key="canMove" value="1"></add>
-		<add key="keyToActivate" value="87"></add>
+		<numState value="2"></numState>
+		<texture1 value="rat9"></texture1>
+		<texture2 value="rat10"></texture2>
+		<direction value="w"></direction>
+		<needToFlip value="false"></needToFlip>
+		<canMove value="true"></canMove>
+		<keyToActivate value="87"></keyToActivate>
 	</RatState>
 	<RatState>
 		<!--GoingDown-->
-		<add Key="numState" value="3"></add>
-		<add key="texture1" value="rat7"></add>
-		<add key="texture2" value="rat8"></add>
-		<add key="direction" value="s"></add>
-		<add key="needToFlip" value="0"></add>
-		<add key="canMove" value="1"></add>
-		<add key="keyToActivate" value="83"></add>
+		<numState value="3"></numState>
+		<texture1 value="rat7"></texture1>
+		<texture2 value="rat8"></texture2>
+		<direction value="s"></direction>
+		<needToFlip value="false"></needToFlip>
+		<canMove value="true"></canMove>
+		<keyToActivate value="83"></keyToActivate>
 	</RatState>
 	<RatState>
 		<!--IdleRight-->
-		<add Key="numState" value="4"></add>
-		<add key="texture1" value="rat23"></add>
-		<add key="texture2" value="rat24"></add>
-		<add key="direction" value="d"></add>
-		<add key="needToFlip" value="0"></add>
-		<add key="canMove" value="0"></add>
-		<add key="keyToActivate" value="32"></add>
+		<numState value="4"></numState>
+		<texture1 value="rat23"></texture1>
+		<texture2 value="rat24"></texture2>
+		<direction value="d"></direction>
+		<needToFlip value="false"></needToFlip>
+		<canMove value="false"></canMove>
+		<keyToActivate value="32"></keyToActivate>
 	</RatState>
 	<RatState>
 		<!--IdleLeft-->
-		<add Key="numState" value="5"></add>
-		<add key="texture1" value="rat25"></add>
-		<add key="texture2" value="rat26"></add>
-		<add key="direction" value="a"></add>
-		<add key="needToFlip" value="0"></add>
-		<add key="canMove" value="0"></add>
-		<add key="keyToActivate" value="32"></add>
+		<numState value="5"></numState>
+		<texture1 value="rat25"></texture1>
+		<texture2 value="rat26"></texture2>
+		<direction value="a"></direction>
+		<needToFlip value="false"></needToFlip>
+		<canMove value="false"></canMove>
+		<keyToActivate value="32"></keyToActivate>
 	</RatState>
 </RatStates>
