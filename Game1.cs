@@ -4,12 +4,15 @@ using Microsoft.Xna.Framework.Input;
 using System.Configuration;
 using System.Diagnostics;
 
-// TODO: detectar tecla sobrepulsada al mover rat
+
+// TODO: pasar los métodos get a propiedades públicas?
 // TODO: lavar codigo game
 // TODO: renombrar clase game1
-// TODO:  debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
-// TODO: strings que uso para acceder al appsettings pasar a constantes?
+// TODO: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
+// TODO: strings que uso para acceder al appsettings pasar a constantes? clase singleton para pasar los valores?
 // TODO: animación queso cayendo
+// TODO: capa de renderizado en función de la posición Y.
+// TODO: cheeseEaterRectangle para colisión más ajustada con los quesos.
 // TODO: crear cheese pool y contador
 // TODO: crear brainRat
 
@@ -39,6 +42,7 @@ namespace Project1
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
             int padding = int.Parse(ConfigurationManager.AppSettings["areaRatPadding"]);
             int topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
             float scale = float.Parse(ConfigurationManager.AppSettings["defaultScale"]);

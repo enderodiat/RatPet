@@ -2,10 +2,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Configuration;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using static Project1.Enums;
 
 namespace Project1
@@ -22,8 +20,7 @@ namespace Project1
         {
             this.speed = speed;
             this.defaultSpeed = speed;
-            this.ratStates = new RatStates();
-            this.ratStates.Load(ConfigurationManager.AppSettings["statesFileName"], content);
+            this.ratStates = new RatStates(ConfigurationManager.AppSettings["statesFileName"], content);
             this.actualState = this.ratStates.States.Where(state => state.numState == Enums.State.goingRight).First();
             this.actualTexture = this.actualState.GetTexture();
             this.window = window;
@@ -31,7 +28,7 @@ namespace Project1
 
         public virtual void Update(Box box)
         {
-            Keys keyPressed = Keyboard.GetState().GetPressedKeys().FirstOrDefault();
+            Keys keyPressed = this.ratStates.GetAllowedKeyPressed(Keyboard.GetState().GetPressedKeys().ToList());
             this.actualState = this.ratStates.GetNewState(keyPressed, this.actualState);
             this.actualTexture = this.actualState.GetTexture();
             this.position = updatePosition();
@@ -43,7 +40,7 @@ namespace Project1
         {
             if(this.actualState.canMove && this.actualState.moving)
             {
-                return getNextPosition(this.actualState.direction, speed);
+                return nextPosition(this.actualState.direction, speed);
             }
             return this.position;
         }
@@ -53,7 +50,7 @@ namespace Project1
             base.DrawCenter(spriteBatch, this.actualState.needToFlip, this.actualTexture);
         }
 
-        private Vector2 getNextPosition(Direction direction, float speed)
+        private Vector2 nextPosition(Direction direction, float speed)
         {
             switch (direction)
             {

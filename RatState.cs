@@ -1,18 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using static Project1.Enums;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Project1
 {
@@ -26,7 +17,6 @@ namespace Project1
         public bool moving;
         public bool canMove;
         public bool wasMoving;
-
         private Texture2D actualTexture;
         private Texture2D texture1;
         private Texture2D texture2;

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -14,10 +13,13 @@ namespace Project1
     public class RatStates
     {
         public List<RatState> States { get; set; }
+
         private int topFramesAnimation;
-        public RatStates() { }
-        public void Load(string fileName, ContentManager content)
-        {
+        private List<Keys> allowedKeys;
+        private Dictionary<Keys, int> simultaneousKeys;
+
+        public RatStates(string fileName, ContentManager content) { 
+            simultaneousKeys = new Dictionary<Keys, int>();
             States = new List<RatState>();
             this.topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
             var assembly = Assembly.GetExecutingAssembly();
@@ -30,6 +32,8 @@ namespace Project1
                     States.Add(new RatState(element, content, this.topFramesAnimation));
                 }
             }
+            allowedKeys = new List<Keys>();
+            allowedKeys.AddRange(States.Select(state => state.keyToActivate).ToList());
         }
 
         public RatState GetNewState(Keys keyPressed, RatState actualState)
@@ -37,6 +41,7 @@ namespace Project1
             var wasMoving = actualState.moving;
             var previousHorizontalDirection = actualState.direction == Direction.right || actualState.direction == Direction.left ?
                 actualState.direction : actualState.previousHorizontalDirection;
+            var previousKeyPressed = actualState.keyToActivate;
             var posibleStates = this.States.Where(state => state.keyToActivate == keyPressed).ToList();
             if (posibleStates.Count == 1)
             {
@@ -50,6 +55,40 @@ namespace Project1
             actualState.wasMoving = wasMoving;
             actualState.previousHorizontalDirection = previousHorizontalDirection;
             return actualState;
+        }
+
+        public Keys GetAllowedKeyPressed(List<Keys> keysPressed)
+        {
+            keysPressed = allowedKeys.Intersect(keysPressed).ToList();
+            var keysUnpressed = allowedKeys.Except(keysPressed).ToList();
+            foreach (var key in keysUnpressed)
+            {
+                simultaneousKeys.Remove(key);
+            }
+            if (keysPressed.Count == 0) 
+            { 
+                return Keys.None;
+            }
+            else
+            {
+                return getNewerKey(keysPressed);
+            }
+        }
+
+        private Keys getNewerKey(List<Keys> keysPressed)
+        {
+            foreach (var key in keysPressed)
+            {
+                if (simultaneousKeys.ContainsKey(key))
+                {
+                    simultaneousKeys[key]++;
+                }
+                else
+                {
+                    simultaneousKeys.Add(key, 1);
+                }
+            }
+            return simultaneousKeys.OrderBy(k => k.Value).First().Key;
         }
     }
 }
