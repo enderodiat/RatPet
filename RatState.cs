@@ -46,18 +46,22 @@ namespace Project1
             this.framesAnimation = 0;
             this.moving = false;
             this.actualTexture = this.texture1;
+            this.previousHorizontalDirection = Direction.right;
         }
 
         public Texture2D GetTexture()
         {
-            if (!this.wasMoving || this.framesAnimation == this.topFramesAnimation)
+            if (this.moving)
             {
-                this.framesAnimation = 0;
-                this.actualTexture = changeTextureAnimation();
-            } 
-            else
-            {
-                this.framesAnimation++;
+                if (!this.wasMoving || this.framesAnimation == this.topFramesAnimation)
+                {
+                    this.framesAnimation = 0;
+                    this.actualTexture = changeTextureAnimation();
+                }
+                else
+                {
+                    this.framesAnimation++;
+                }
             }
             return this.actualTexture;
         }

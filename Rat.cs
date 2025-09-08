@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Configuration;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -30,30 +31,21 @@ namespace Project1
 
         public virtual void Update(Box box)
         {
-            var keyPressed = Keyboard.GetState().GetPressedKeys().FirstOrDefault(Keys.X);
-            var wasMoving = this.actualState.moving;
-            var previousHorizontalDirection = this.actualState.direction == Direction.right || this.actualState.direction == Direction.left ?
-                this.actualState.direction : this.actualState.previousHorizontalDirection;
-            var posibleStates = this.ratStates.States.Where(state => state.keyToActivate == keyPressed).ToList();
-            if(posibleStates.Count == 0)
-            {
-                posibleStates.Add(this.actualState);
-            }
-            else if(posibleStates.Count == 1)
-            {
-                this.actualState = posibleStates[0];
-            }
-            else
-            {
-                this.actualState = posibleStates.Where(s => s.direction == previousHorizontalDirection).First();
-            }
-            this.actualState.moving = !(keyPressed == Keys.X);
-            this.actualState.wasMoving = wasMoving;
-            this.actualState.previousHorizontalDirection = previousHorizontalDirection;
-            this.actualTexture = this.actualState.moving ? this.actualState.GetTexture() : this.actualTexture;
-            this.position = this.actualState.canMove && this.actualState.moving ? getPosition(this.actualState.direction, speed) : this.position;
+            Keys keyPressed = Keyboard.GetState().GetPressedKeys().FirstOrDefault();
+            this.actualState = this.ratStates.GetNewState(keyPressed, this.actualState);
+            this.actualTexture = this.actualState.GetTexture();
+            this.position = updatePosition();
             this.position = box.Collision(this.Rectangle);
             this.scale = Helper.GetScale(this.position.Y, this.window, this.defaultScale, box.margin); 
+        }
+
+        private Vector2 updatePosition()
+        {
+            if(this.actualState.canMove && this.actualState.moving)
+            {
+                return getNextPosition(this.actualState.direction, speed);
+            }
+            return this.position;
         }
 
         public override void Draw(SpriteBatch spriteBatch, Texture2D texture = null)
@@ -61,7 +53,7 @@ namespace Project1
             base.DrawCenter(spriteBatch, this.actualState.needToFlip, this.actualTexture);
         }
 
-        private Vector2 getPosition(Direction direction, float speed)
+        private Vector2 getNextPosition(Direction direction, float speed)
         {
             switch (direction)
             {

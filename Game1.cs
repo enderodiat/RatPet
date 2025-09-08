@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Input;
 using System.Configuration;
 using System.Diagnostics;
 
-// TODO: Refactorizar Rat.Update() para llevar la lógica de obtener nuevo estado a la clase RatStates
 // TODO: detectar tecla sobrepulsada al mover rat
 // TODO: lavar codigo game
 // TODO: renombrar clase game1
