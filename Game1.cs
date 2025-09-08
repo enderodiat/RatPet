@@ -4,6 +4,15 @@ using Microsoft.Xna.Framework.Input;
 using System.Configuration;
 using System.Diagnostics;
 
+// TODO: pasar dirección a enum
+// TODO: detectar tecla sobrepulsada al mover rat
+// TODO: estado idle hacia la izquierda
+// TODO: lavar codigo game
+// TODO: renombrar clase game1
+// TODO: animación queso cayendo
+// TODO: crear cheese pool y contador
+// TODO: crear brainRat
+
 namespace Project1
 {
     public class Game1 : Game
@@ -15,7 +24,7 @@ namespace Project1
         Box box;
         Cheese cheese;
 
-        public Game1() // TODO lavar
+        public Game1() 
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

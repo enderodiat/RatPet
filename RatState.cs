@@ -19,7 +19,7 @@ namespace Project1
     public class RatState
     {
         public State numState;
-        public char direction;
+        public Direction direction;
         public Keys keyToActivate;
         public bool needToFlip;
         public bool moving;
@@ -34,9 +34,8 @@ namespace Project1
 
         public RatState(XElement state, ContentManager content, int topFramesAnimation)
         {
-            // TODO: estado idle hacia la izquierda
             this.numState = (State)int.Parse(state.Elements(nameof(RatState.numState)).First().Attribute("value").Value);
-            this.direction = state.Elements(nameof(RatState.direction)).First().Attribute("value").Value[0];
+            this.direction = (Direction)int.Parse(state.Elements(nameof(RatState.direction)).First().Attribute("value").Value);
             this.keyToActivate = (Keys)int.Parse(state.Elements(nameof(RatState.keyToActivate)).First().Attribute("value").Value);
             this.texture1 = content.Load<Texture2D>(state.Elements(nameof(RatState.texture1)).First().Attribute("value").Value);
             this.texture2 = content.Load<Texture2D>(state.Elements(nameof(RatState.texture2)).First().Attribute("value").Value);
@@ -53,7 +52,7 @@ namespace Project1
             if (!this.wasMoving || this.framesAnimation == this.topFramesAnimation)
             {
                 this.framesAnimation = 0;
-                this.actualTexture = changeTextureDirection();
+                this.actualTexture = changeTextureAnimation();
             } 
             else
             {
@@ -62,7 +61,7 @@ namespace Project1
             return this.actualTexture;
         }
 
-        private Texture2D changeTextureDirection()
+        private Texture2D changeTextureAnimation()
         {
             return this.actualTexture == this.texture1 ? this.texture2 : this.texture1;
         }

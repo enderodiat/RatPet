@@ -2,14 +2,9 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static Project1.Enums;
 
 namespace Project1
 {
@@ -38,7 +33,7 @@ namespace Project1
 
         public virtual void Update(Box box)
         {
-            var keyPressed = Keyboard.GetState().GetPressedKeys().FirstOrDefault(Keys.X); // TODO: detectar tecla sobrepulsada
+            var keyPressed = Keyboard.GetState().GetPressedKeys().FirstOrDefault(Keys.X);
             bool wasMoving = this.actualState.moving;
             this.actualState = this.ratStates.States.Where(state => state.keyToActivate == keyPressed).FirstOrDefault(this.actualState);
             this.actualState.moving = !(keyPressed == Keys.X);
@@ -54,17 +49,17 @@ namespace Project1
             base.DrawCenter(spriteBatch, this.actualState.needToFlip, this.actualTexture);
         }
 
-        private Vector2 getPosition(char direction, float speed)
+        private Vector2 getPosition(Direction direction, float speed)
         {
-            switch (direction) // TODO: pasar directo a enum
+            switch (direction)
             {
-                case 'w':
+                case Enums.Direction.up:
                     return new Vector2(this.position.X, this.position.Y - speed);
-                case 's':
+                case Enums.Direction.down:
                     return new Vector2(this.position.X, this.position.Y + speed);
-                case 'd':
+                case Enums.Direction.right:
                     return new Vector2(this.position.X + speed, this.position.Y);
-                case 'a':
+                case Enums.Direction.left:
                     return new Vector2(this.position.X - speed, this.position.Y);
             }
             return new Vector2(this.position.X, this.position.Y);

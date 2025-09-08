@@ -17,5 +17,12 @@ namespace Project1
             idleRight,
             idleLeft
         }
+        public enum Direction
+        {
+            right,
+            up,
+            left,
+            down
+        }
     }
 }

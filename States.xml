@@ -5,7 +5,7 @@
 		<numState value="0"></numState>
 		<texture1 value="rat1"></texture1>
 		<texture2 value="rat2"></texture2>
-		<direction value="d"></direction>
+		<direction value="0"></direction>
 		<needToFlip value="false"></needToFlip>
 		<canMove value="true"></canMove>
 		<keyToActivate value="68"></keyToActivate>
@@ -15,7 +15,7 @@
 		<numState value="1"></numState>
 		<texture1 value="rat1"></texture1>
 		<texture2 value="rat2"></texture2>
-		<direction value="a"></direction>
+		<direction value="2"></direction>
 		<needToFlip value="true"></needToFlip>
 		<canMove value="true"></canMove>
 		<keyToActivate value="65"></keyToActivate>
@@ -25,7 +25,7 @@
 		<numState value="2"></numState>
 		<texture1 value="rat9"></texture1>
 		<texture2 value="rat10"></texture2>
-		<direction value="w"></direction>
+		<direction value="1"></direction>
 		<needToFlip value="false"></needToFlip>
 		<canMove value="true"></canMove>
 		<keyToActivate value="87"></keyToActivate>
@@ -35,7 +35,7 @@
 		<numState value="3"></numState>
 		<texture1 value="rat7"></texture1>
 		<texture2 value="rat8"></texture2>
-		<direction value="s"></direction>
+		<direction value="3"></direction>
 		<needToFlip value="false"></needToFlip>
 		<canMove value="true"></canMove>
 		<keyToActivate value="83"></keyToActivate>
@@ -45,7 +45,7 @@
 		<numState value="4"></numState>
 		<texture1 value="rat23"></texture1>
 		<texture2 value="rat24"></texture2>
-		<direction value="d"></direction>
+		<direction value="0"></direction>
 		<needToFlip value="false"></needToFlip>
 		<canMove value="false"></canMove>
 		<keyToActivate value="32"></keyToActivate>
@@ -55,7 +55,7 @@
 		<numState value="5"></numState>
 		<texture1 value="rat25"></texture1>
 		<texture2 value="rat26"></texture2>
-		<direction value="a"></direction>
+		<direction value="2"></direction>
 		<needToFlip value="false"></needToFlip>
 		<canMove value="false"></canMove>
 		<keyToActivate value="32"></keyToActivate>
