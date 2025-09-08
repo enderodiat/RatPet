@@ -4,11 +4,12 @@ using Microsoft.Xna.Framework.Input;
 using System.Configuration;
 using System.Diagnostics;
 
-// TODO: pasar dirección a enum
+// TODO: Refactorizar Rat.Update() para llevar la lógica de obtener nuevo estado a la clase RatStates
 // TODO: detectar tecla sobrepulsada al mover rat
-// TODO: estado idle hacia la izquierda
 // TODO: lavar codigo game
 // TODO: renombrar clase game1
+// TODO:  debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
+// TODO: strings que uso para acceder al appsettings pasar a constantes?
 // TODO: animación queso cayendo
 // TODO: crear cheese pool y contador
 // TODO: crear brainRat

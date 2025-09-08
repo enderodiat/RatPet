@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Configuration;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using static Project1.Enums;
 
 namespace Project1
@@ -15,10 +16,6 @@ namespace Project1
         private RatStates ratStates;
         private Viewport window;
         private RatState actualState;
-
-        //Nota: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
-        //también debería hacer algo con las direcciones (clase enumerada o algo)
-        //y con la strings que uso para acceder al appsettings
 
         public Rat(ContentManager content, Vector2 position, Viewport window, float scaleFactor = 1, float speed = 0, Texture2D texture = null) : base(position, texture, scaleFactor)
         {
@@ -34,10 +31,25 @@ namespace Project1
         public virtual void Update(Box box)
         {
             var keyPressed = Keyboard.GetState().GetPressedKeys().FirstOrDefault(Keys.X);
-            bool wasMoving = this.actualState.moving;
-            this.actualState = this.ratStates.States.Where(state => state.keyToActivate == keyPressed).FirstOrDefault(this.actualState);
+            var wasMoving = this.actualState.moving;
+            var previousHorizontalDirection = this.actualState.direction == Direction.right || this.actualState.direction == Direction.left ?
+                this.actualState.direction : this.actualState.previousHorizontalDirection;
+            var posibleStates = this.ratStates.States.Where(state => state.keyToActivate == keyPressed).ToList();
+            if(posibleStates.Count == 0)
+            {
+                posibleStates.Add(this.actualState);
+            }
+            else if(posibleStates.Count == 1)
+            {
+                this.actualState = posibleStates[0];
+            }
+            else
+            {
+                this.actualState = posibleStates.Where(s => s.direction == previousHorizontalDirection).First();
+            }
             this.actualState.moving = !(keyPressed == Keys.X);
             this.actualState.wasMoving = wasMoving;
+            this.actualState.previousHorizontalDirection = previousHorizontalDirection;
             this.actualTexture = this.actualState.moving ? this.actualState.GetTexture() : this.actualTexture;
             this.position = this.actualState.canMove && this.actualState.moving ? getPosition(this.actualState.direction, speed) : this.position;
             this.position = box.Collision(this.Rectangle);

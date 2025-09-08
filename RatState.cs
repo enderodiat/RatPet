@@ -20,6 +20,7 @@ namespace Project1
     {
         public State numState;
         public Direction direction;
+        public Direction previousHorizontalDirection;
         public Keys keyToActivate;
         public bool needToFlip;
         public bool moving;
