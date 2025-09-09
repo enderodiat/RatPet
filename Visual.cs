@@ -47,19 +47,20 @@ namespace Project1
             spriteBatch.Draw(texture != null ? texture : this.actualTexture, Rectangle, Color.White);
         }
 
-        public void DrawCenter(SpriteBatch spriteBatch, bool flipTexture, Texture2D texture = null)
+        public void DrawCenter(SpriteBatch spriteBatch, bool flipTexture, float yPosition)
         {
-            Texture2D texture2D = texture != null ? texture : this.actualTexture;
+            var bottomPosition = yPosition + this.Rectangle.Height/2;
+            var layer = (1 / bottomPosition);
             spriteBatch.Draw(
-                texture2D,
+                this.actualTexture,
                 this.position,
                 null,
                 Color.White,
                 0f,
-                new Vector2(texture2D.Width/2, texture2D.Height/2),
+                new Vector2(this.actualTexture.Width/2, this.actualTexture.Height/2),
                 this.scale,
                 flipTexture ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-                0f);
+                layer);
         }
     }
 }

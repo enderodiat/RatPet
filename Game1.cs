@@ -4,15 +4,12 @@ using Microsoft.Xna.Framework.Input;
 using System.Configuration;
 using System.Diagnostics;
 
-
+// TODO: animación queso cayendo
 // TODO: pasar los métodos get a propiedades públicas?
 // TODO: lavar codigo game
 // TODO: renombrar clase game1
 // TODO: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
 // TODO: strings que uso para acceder al appsettings pasar a constantes? clase singleton para pasar los valores?
-// TODO: animación queso cayendo
-// TODO: capa de renderizado en función de la posición Y.
-// TODO: cheeseEaterRectangle para colisión más ajustada con los quesos.
 // TODO: crear cheese pool y contador
 // TODO: crear brainRat
 
@@ -47,6 +44,8 @@ namespace Project1
             int topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
             float scale = float.Parse(ConfigurationManager.AppSettings["defaultScale"]);
             float defaultSpeed = float.Parse(ConfigurationManager.AppSettings["defaultSpeed"]);
+            float reduceCollisionY = float.Parse(ConfigurationManager.AppSettings["collisionCheeseReduceFactorY"]);
+            float reduceCollisionX = float.Parse(ConfigurationManager.AppSettings["collisionCheeseReduceFactorX"]);
 
             box = new Box(Content, padding, GraphicsDevice.Viewport);
 
@@ -56,7 +55,7 @@ namespace Project1
                 scale,
                 defaultSpeed);
 
-            cheese = new(Content, new Vector2(0,0), GraphicsDevice.Viewport, padding, scale);
+            cheese = new Cheese(Content, new Vector2(0,0), GraphicsDevice.Viewport, padding, reduceCollisionX, reduceCollisionY, scale);
             cheese.SetNewPosition();
         }
 
@@ -78,11 +77,13 @@ namespace Project1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(
+                SpriteSortMode.BackToFront,
+                samplerState: SamplerState.PointClamp);
 
             if (!cheese.Collision(rat))
             {
-                cheese.Draw(_spriteBatch);
+                cheese.DrawCenter(_spriteBatch, false, cheese.position.Y);
             }
             else
             {

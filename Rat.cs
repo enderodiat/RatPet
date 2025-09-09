@@ -47,7 +47,7 @@ namespace Project1
 
         public override void Draw(SpriteBatch spriteBatch, Texture2D texture = null)
         {
-            base.DrawCenter(spriteBatch, this.actualState.needToFlip, this.actualTexture);
+            base.DrawCenter(spriteBatch, this.actualState.needToFlip, this.position.Y);
         }
 
         private Vector2 nextPosition(Direction direction, float speed)
