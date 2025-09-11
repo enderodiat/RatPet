@@ -4,13 +4,12 @@ using Microsoft.Xna.Framework.Input;
 using System.Configuration;
 using System.Diagnostics;
 
-// TODO: animación queso cayendo
 // TODO: pasar los métodos get a propiedades públicas?
 // TODO: lavar codigo game
 // TODO: renombrar clase game1
 // TODO: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
 // TODO: strings que uso para acceder al appsettings pasar a constantes? clase singleton para pasar los valores?
-// TODO: crear cheese pool y contador
+// TODO: contador de cheese
 // TODO: crear brainRat
 
 namespace Project1
@@ -22,7 +21,7 @@ namespace Project1
 
         Rat rat;
         Box box;
-        Cheese cheese;
+        CheesePool cheesePool;
 
         public Game1() 
         {
@@ -42,10 +41,10 @@ namespace Project1
 
             int padding = int.Parse(ConfigurationManager.AppSettings["areaRatPadding"]);
             int topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
+            int mediaFramesPerCheese = int.Parse(ConfigurationManager.AppSettings["mediaFramesPerNewCheese"]);
             int defaultSpeed = int.Parse(ConfigurationManager.AppSettings["defaultSpeed"]);
             int fallingSpeed = int.Parse(ConfigurationManager.AppSettings["fallingSpeed"]);
             float scale = float.Parse(ConfigurationManager.AppSettings["defaultScale"]);
-            
             float reduceCollisionY = float.Parse(ConfigurationManager.AppSettings["collisionCheeseReduceFactorY"]);
             float reduceCollisionX = float.Parse(ConfigurationManager.AppSettings["collisionCheeseReduceFactorX"]);
 
@@ -57,8 +56,7 @@ namespace Project1
                 scale,
                 defaultSpeed);
 
-            cheese = new Cheese(Content, new Vector2(0,0), GraphicsDevice.Viewport, padding, reduceCollisionX, reduceCollisionY, fallingSpeed, scale);
-            cheese.SetNewPosition();
+            cheesePool = new CheesePool(Content, GraphicsDevice.Viewport, padding, reduceCollisionX, reduceCollisionY, fallingSpeed, mediaFramesPerCheese, scale);
         }
 
         protected override void Update(GameTime gameTime)
@@ -68,11 +66,10 @@ namespace Project1
             {
                 Debug.WriteLine("Mouse: (" + Mouse.GetState().X + ", " + Mouse.GetState().Y + ")");
                 Debug.WriteLine(rat.scale);
-                cheese.SetNewPosition();
             }
 
             rat.Update(box);
-            cheese.Update();
+            cheesePool.Update(rat);
 
             base.Update(gameTime);
         }
@@ -84,16 +81,8 @@ namespace Project1
                 SpriteSortMode.BackToFront,
                 samplerState: SamplerState.PointClamp);
 
-            if (!cheese.Collision(rat))
-            {
-                cheese.Draw(_spriteBatch);
-            }
-            else
-            {
-                cheese.SetNewPosition();
-            }
-
             rat.Draw(_spriteBatch);
+            cheesePool.Draw(_spriteBatch);
             //box.Draw(_spriteBatch);
 
             _spriteBatch.End();

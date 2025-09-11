@@ -64,9 +64,10 @@ namespace Project1
             this.reduceFactorX = reduceFactorX;
             this.reduceFactorY = reduceFactorY;
             this.speed = speed;
+            SetNewPosition();
         }
 
-        public void SetNewPosition()
+        private void SetNewPosition()
         {
             Random rdn = new Random();
             base.Position = new Vector2(rdn.Next(this.Padding + base.Rectangle.Width / 2, this.window.Width - (this.Padding + base.Rectangle.Width / 2)),
