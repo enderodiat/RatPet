@@ -43,10 +43,10 @@ namespace Project1
                 {
                     switch (lineNumber)
                     {
-                        case 1: return new Vector2(line.position.X + rectangle.Width / 2 + 1, rectangle.Center.Y);
-                        case 2: return new Vector2(rectangle.Center.X, line.position.Y + rectangle.Height / 2 + 1);
-                        case 3: return new Vector2(line.position.X - rectangle.Width / 2 - 1, rectangle.Center.Y);
-                        case 4: return new Vector2(rectangle.Center.X, line.position.Y - rectangle.Height / 2 - 1);
+                        case 1: return new Vector2(line.Position.X + rectangle.Width / 2 + 1, rectangle.Center.Y);
+                        case 2: return new Vector2(rectangle.Center.X, line.Position.Y + rectangle.Height / 2 + 1);
+                        case 3: return new Vector2(line.Position.X - rectangle.Width / 2 - 1, rectangle.Center.Y);
+                        case 4: return new Vector2(rectangle.Center.X, line.Position.Y - rectangle.Height / 2 - 1);
                     }
                 }
                 lineNumber++;

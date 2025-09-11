@@ -10,13 +10,13 @@ namespace Project1
 {
     public class Rat : Visual
     {
-        internal float speed;
+        internal int speed;
         internal float defaultSpeed;
         private RatStates ratStates;
         private Viewport window;
         private RatState actualState;
 
-        public Rat(ContentManager content, Vector2 position, Viewport window, float scaleFactor = 1, float speed = 0, Texture2D texture = null) : base(position, texture, scaleFactor)
+        public Rat(ContentManager content, Vector2 position, Viewport window, float scaleFactor = 1, int speed = 0, Texture2D texture = null) : base(position, texture, scaleFactor)
         {
             this.speed = speed;
             this.defaultSpeed = speed;
@@ -31,9 +31,9 @@ namespace Project1
             Keys keyPressed = this.ratStates.GetAllowedKeyPressed(Keyboard.GetState().GetPressedKeys().ToList());
             this.actualState = this.ratStates.GetNewState(keyPressed, this.actualState);
             this.actualTexture = this.actualState.GetTexture();
-            this.position = updatePosition();
-            this.position = box.Collision(this.Rectangle);
-            this.scale = Helper.GetScale(this.position.Y, this.window, this.defaultScale, box.margin); 
+            this.Position = updatePosition();
+            this.Position = box.Collision(this.Rectangle);
+            this.scale = Helper.GetScale(this.Position.Y, this.window, this.defaultScale, box.margin); 
         }
 
         private Vector2 updatePosition()
@@ -42,12 +42,12 @@ namespace Project1
             {
                 return nextPosition(this.actualState.direction, speed);
             }
-            return this.position;
+            return this.Position;
         }
 
         public override void Draw(SpriteBatch spriteBatch, Texture2D texture = null)
         {
-            base.DrawCenter(spriteBatch, this.actualState.needToFlip, this.position.Y);
+            base.DrawCenter(spriteBatch, this.actualState.needToFlip);
         }
 
         private Vector2 nextPosition(Direction direction, float speed)
@@ -55,15 +55,15 @@ namespace Project1
             switch (direction)
             {
                 case Enums.Direction.up:
-                    return new Vector2(this.position.X, this.position.Y - speed);
+                    return new Vector2(this.Position.X, this.Position.Y - speed);
                 case Enums.Direction.down:
-                    return new Vector2(this.position.X, this.position.Y + speed);
+                    return new Vector2(this.Position.X, this.Position.Y + speed);
                 case Enums.Direction.right:
-                    return new Vector2(this.position.X + speed, this.position.Y);
+                    return new Vector2(this.Position.X + speed, this.Position.Y);
                 case Enums.Direction.left:
-                    return new Vector2(this.position.X - speed, this.position.Y);
+                    return new Vector2(this.Position.X - speed, this.Position.Y);
             }
-            return new Vector2(this.position.X, this.position.Y);
+            return new Vector2(this.Position.X, this.Position.Y);
         }
     }
 }

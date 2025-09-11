@@ -5,22 +5,28 @@ namespace Project1
 {
     public class Visual
     {
-        internal Vector2 position;
-        internal float scale;
-        internal float defaultScale;
-        internal Texture2D actualTexture;
-        private Rectangle? _rectangle;
+
+        public Vector2 Position { 
+            get
+            {
+                return this.position;
+            } 
+            set
+            {
+                this.position = value;
+            }
+        }
         public Rectangle Rectangle
         {
             get
             {
-                if(!_rectangle.HasValue)
+                if (!_rectangle.HasValue)
                 {
                     int width = (int)(actualTexture.Width * scale);
                     int height = (int)(actualTexture.Height * scale);
                     return new Rectangle(
-                        (int)position.X - width/2,
-                        (int)position.Y - height/2,
+                        (int)Position.X - width / 2,
+                        (int)Position.Y - height / 2,
                         width,
                         height);
                 }
@@ -30,10 +36,16 @@ namespace Project1
                 }
             }
         }
+        public float scale;
+        public float defaultScale;
+        public Texture2D actualTexture;
+        private Rectangle? _rectangle;
+        private Vector2 position;
+        
 
         public Visual(Vector2 position, Texture2D texture, float scaleFactor = 1f, Rectangle? rectangle = null)
         {
-            this.position = position;
+            this.Position = position;
             this.scale = scaleFactor;
             this.defaultScale = scaleFactor;
             this.actualTexture = texture;
@@ -47,13 +59,13 @@ namespace Project1
             spriteBatch.Draw(texture != null ? texture : this.actualTexture, Rectangle, Color.White);
         }
 
-        public void DrawCenter(SpriteBatch spriteBatch, bool flipTexture, float yPosition)
+        public void DrawCenter(SpriteBatch spriteBatch, bool flipTexture, Vector2? position = null)
         {
-            var bottomPosition = yPosition + this.Rectangle.Height/2;
+            var bottomPosition = this.Position.Y + this.Rectangle.Height/2;
             var layer = (1 / bottomPosition);
             spriteBatch.Draw(
                 this.actualTexture,
-                this.position,
+                position.HasValue ? position.Value : this.Position,
                 null,
                 Color.White,
                 0f,

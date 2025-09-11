@@ -42,8 +42,10 @@ namespace Project1
 
             int padding = int.Parse(ConfigurationManager.AppSettings["areaRatPadding"]);
             int topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
+            int defaultSpeed = int.Parse(ConfigurationManager.AppSettings["defaultSpeed"]);
+            int fallingSpeed = int.Parse(ConfigurationManager.AppSettings["fallingSpeed"]);
             float scale = float.Parse(ConfigurationManager.AppSettings["defaultScale"]);
-            float defaultSpeed = float.Parse(ConfigurationManager.AppSettings["defaultSpeed"]);
+            
             float reduceCollisionY = float.Parse(ConfigurationManager.AppSettings["collisionCheeseReduceFactorY"]);
             float reduceCollisionX = float.Parse(ConfigurationManager.AppSettings["collisionCheeseReduceFactorX"]);
 
@@ -55,7 +57,7 @@ namespace Project1
                 scale,
                 defaultSpeed);
 
-            cheese = new Cheese(Content, new Vector2(0,0), GraphicsDevice.Viewport, padding, reduceCollisionX, reduceCollisionY, scale);
+            cheese = new Cheese(Content, new Vector2(0,0), GraphicsDevice.Viewport, padding, reduceCollisionX, reduceCollisionY, fallingSpeed, scale);
             cheese.SetNewPosition();
         }
 
@@ -70,6 +72,7 @@ namespace Project1
             }
 
             rat.Update(box);
+            cheese.Update();
 
             base.Update(gameTime);
         }
@@ -83,7 +86,7 @@ namespace Project1
 
             if (!cheese.Collision(rat))
             {
-                cheese.DrawCenter(_spriteBatch, false, cheese.position.Y);
+                cheese.Draw(_spriteBatch);
             }
             else
             {
@@ -91,7 +94,7 @@ namespace Project1
             }
 
             rat.Draw(_spriteBatch);
-            box.Draw(_spriteBatch);
+            //box.Draw(_spriteBatch);
 
             _spriteBatch.End();
             base.Draw(gameTime);
