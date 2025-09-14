@@ -3,58 +3,60 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Project1
+namespace RatPet.VisualControllers
 {
-    public class CheesePool
+    public class CheesePool : Visual
     {
-        private ContentManager contentManager;
-        private Viewport window;
-        private float scale;
         private float reduceFactorX;
         private float reduceFactorY;
         private List<Cheese> pool;
-        private int padding;
         private int speed;
         private int topFrames;
         private int framesUntilNewCheese;
+        private Rat rat;
+        private Rectangle area;
         
-        public CheesePool(ContentManager content, Viewport window, int padding, float reduceFactorX, float reduceFactorY, int speed, int topFrames, float scaleFactor = 1f)
+        public CheesePool(Vector2 position, Texture2D texture, Rectangle area, Rat rat, float reduceFactorX, float reduceFactorY, int speed, int topFrames, float scaleFactor = 1f) 
+            : base(position, texture, scaleFactor)
         {
-            this.contentManager = content;
-            this.window = window;
-            this.padding = padding;
             this.reduceFactorX = reduceFactorX;
             this.reduceFactorY = reduceFactorY;
             this.speed = speed;
-            this.scale = scaleFactor;
+            this.rat = rat;
             this.topFrames = topFrames;
             this.pool = new List<Cheese>();
             this.framesUntilNewCheese = 0;
+            this.area = area;
         }
 
-        public void Update(Visual visual)
+        public override void Update()
         {
             if(framesUntilNewCheese == 0)
             {
                 Random random = new Random();
-                this.framesUntilNewCheese = random.Next(this.topFrames);
-                this.pool.Add(new Cheese(this.contentManager, new Vector2(0, 0), window, this.padding, this.reduceFactorX, this.reduceFactorY, this.speed, this.scale));
+                framesUntilNewCheese = random.Next(topFrames);
+                pool.Add(new Cheese(new Vector2(0, 0), this.actualTexture, this.area, reduceFactorX, reduceFactorY, speed, scale));
             }
             else
             {
-                this.framesUntilNewCheese--;
+                framesUntilNewCheese--;
             }
-            deleteCheese(visual);
+            deleteCheese(this.rat);
             updateCheese();
+        }
+
+        public override void Draw(SpriteBatch spritebatch, bool flip = false, Vector2? position = null)
+        {
+            foreach (var cheese in pool)
+            {
+                cheese.Draw(spritebatch);
+            }
         }
 
         private void updateCheese()
         {
-            foreach(var cheese in this.pool)
+            foreach(var cheese in pool)
             {
                 cheese.Update();
             }
@@ -63,7 +65,7 @@ namespace Project1
         private void deleteCheese(Visual visual)
         {
             List<Cheese> cheeseToDelete = new List<Cheese>();
-            foreach(var cheese in this.pool)
+            foreach(var cheese in pool)
             {
                 if (cheese.Collision(visual))
                 {
@@ -72,15 +74,7 @@ namespace Project1
             }
             foreach(var cheese in cheeseToDelete)
             {
-                this.pool.Remove(cheese);
-            }
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            foreach(var cheese in this.pool)
-            {
-                cheese.Draw(spriteBatch);
+                pool.Remove(cheese);
             }
         }
     }

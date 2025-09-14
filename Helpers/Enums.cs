@@ -1,4 +1,4 @@
-﻿namespace Project1
+﻿namespace RatPet.Helpers
 {
     public static class Enums
     {

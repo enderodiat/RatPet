@@ -6,9 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using static Project1.Enums;
+using static RatPet.Helpers.Enums;
 
-namespace Project1
+namespace RatPet.VisualControllers
 {
     public class RatStates
     {
@@ -18,10 +18,10 @@ namespace Project1
         private List<Keys> allowedKeys;
         private Dictionary<Keys, int> simultaneousKeys;
 
-        public RatStates(string fileName, ContentManager content) { 
+        public RatStates(string fileName, ContentManager content, int topFrames) { 
             simultaneousKeys = new Dictionary<Keys, int>();
             States = new List<RatState>();
-            this.topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
+            topFramesAnimation = topFrames;
             var assembly = Assembly.GetExecutingAssembly();
             using (Stream stream = assembly.GetManifestResourceStream(fileName))
             {
@@ -29,7 +29,7 @@ namespace Project1
                 var states = doc.Descendants(typeof(RatState).Name);
                 foreach (var element in states)
                 {
-                    States.Add(new RatState(element, content, this.topFramesAnimation));
+                    States.Add(new RatState(element, content, topFramesAnimation));
                 }
             }
             allowedKeys = new List<Keys>();
@@ -42,7 +42,7 @@ namespace Project1
             var previousHorizontalDirection = actualState.direction == Direction.right || actualState.direction == Direction.left ?
                 actualState.direction : actualState.previousHorizontalDirection;
             var previousKeyPressed = actualState.keyToActivate;
-            var posibleStates = this.States.Where(state => state.keyToActivate == keyPressed).ToList();
+            var posibleStates = States.Where(state => state.keyToActivate == keyPressed).ToList();
             if (posibleStates.Count == 1)
             {
                 actualState = posibleStates[0];
