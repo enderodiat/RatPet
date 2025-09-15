@@ -16,7 +16,7 @@ namespace RatPet.VisualControllers
                 position = value;
             }
         }
-        public Rectangle Rectangle
+        public virtual Rectangle Rectangle
         {
             get
             {
@@ -35,24 +35,40 @@ namespace RatPet.VisualControllers
                     return _rectangle.Value;
                 }
             }
+            set
+            {
+                _rectangle = value;
+            }
         }
         public float scale;
         public float defaultScale;
         public Texture2D actualTexture;
+        public Visual collider;
+        public Visual container;
         private Rectangle? _rectangle;
         private Vector2 position;
         
 
-        public Visual(Vector2 position, Texture2D texture, float scaleFactor = 1f, Rectangle? rectangle = null)
+        public Visual(Texture2D texture, float scaleFactor = 1f,  Visual collider = null, Visual container = null, Vector2? position = null, Rectangle? rectangle = null)
         {
-            Position = position;
-            scale = scaleFactor;
-            defaultScale = scaleFactor;
-            actualTexture = texture;
-            if (rectangle.HasValue)
+            this.scale = scaleFactor;
+            this.defaultScale = scaleFactor;
+            this.actualTexture = texture;
+            this._rectangle = rectangle.HasValue ? rectangle.Value : null;
+            this.collider = collider;
+            this.container = container;
+            if (position.HasValue)
             {
-                _rectangle = rectangle.Value;
+                this.position = position.Value;
             }
+            else if(!position.HasValue && container != null)
+            {
+                this.position = new Vector2(container.Rectangle.Center.X, container.Rectangle.Center.Y);
+            }
+            else
+            {
+                position = new Vector2(0, 0);
+            } 
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null)
@@ -72,5 +88,8 @@ namespace RatPet.VisualControllers
         }
 
         public virtual void Update() { }
+        public virtual Vector2? Collision(Visual visual) { 
+            return null; 
+        }
     }
 }

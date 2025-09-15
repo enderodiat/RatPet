@@ -5,12 +5,11 @@ namespace RatPet.VisualControllers
 {
     public class Box : Visual
     {
-        public new Rectangle Rectangle { get; set; }
         private const int width = 1;
         private List<Visual> lines;
         private bool drawBorders;
 
-        public Box(Vector2 position, Viewport window,  Texture2D texture, bool drawBorders, float scaleFactor = 1f) :  base(position, texture, scaleFactor)
+        public Box(Vector2 position, Viewport window,  Texture2D texture, bool drawBorders, float scaleFactor = 1f) :  base(texture, scaleFactor, null, null, position)
         {
             int margin = (int)position.X;
             this.lines = new List<Visual>()
@@ -26,7 +25,7 @@ namespace RatPet.VisualControllers
 
         private Visual createLine(int x, int y, int width, int height, Texture2D texture)
         {
-            return new Visual(new Vector2(x, y), this.actualTexture, 1f, new Rectangle(x, y, width, height));
+            return new Visual(this.actualTexture, 1f, null, null, new Vector2(x, y), new Rectangle(x, y, width, height));
         }
 
         public override void Draw(SpriteBatch spritebatch, bool flip = false, Vector2? position = null)
@@ -40,7 +39,7 @@ namespace RatPet.VisualControllers
             }
         }
 
-        public Vector2 Collision(Visual visual)
+        public override Vector2? Collision(Visual visual)
         {
             int lineNumber = 1;
             Rectangle rectangle = visual.Rectangle;

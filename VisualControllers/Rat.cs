@@ -14,16 +14,15 @@ namespace RatPet.VisualControllers
         internal float defaultSpeed;
         private RatStates ratStates;
         private RatState actualState;
-        private Box box;
 
-        public Rat(Vector2 position, ContentManager content,Box box, int topFrames, string statesFileName, float scaleFactor = 1, int speed = 0, Texture2D texture = null) : base(position, texture, scaleFactor)
+        public Rat(ContentManager content, Visual box, int topFrames, string statesFileName, float scaleFactor = 1, int speed = 0, Texture2D texture = null) 
+            : base(texture, scaleFactor, box, box)
         {
             this.speed = speed;
             defaultSpeed = speed;
             ratStates = new RatStates(statesFileName, content, topFrames);
             actualState = ratStates.States.Where(state => state.numState == State.goingRight).First();
             actualTexture = actualState.GetTexture();
-            this.box = box;
         }
 
         public override void Update()
@@ -32,8 +31,8 @@ namespace RatPet.VisualControllers
             actualState = ratStates.GetNewState(keyPressed, actualState);
             actualTexture = actualState.GetTexture();
             Position = updatePosition();
-            Position = this.box.Collision(this);
-            scale = Helper.GetScale(Position.Y, defaultScale, box.Rectangle); 
+            Position = this.container.Collision(this).Value;
+            scale = Helper.GetScale(Position.Y, defaultScale, this.collider.Rectangle); 
         }
 
         public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null)

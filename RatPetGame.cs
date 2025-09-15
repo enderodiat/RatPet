@@ -6,13 +6,14 @@ using RatPet.VisualControllers;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-
 // TODO: escalar velocidad
 // TODO: pasar los métodos get a propiedades públicas?
 // TODO: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
 // TODO: strings que uso para acceder al appsettings pasar a constantes? clase singleton para pasar los valores?
 // TODO: contador de cheese
-// TODO: crear brainRat
+// TODO: Objeto pantalla que conste de box, botonera y background, todo lo inamovible en pantalla
+// TODO: Función go to the point, para clickar en pantalla y que la rata camine
+// TODO: crear brainRat, tal vez utilizar ratTasks? algo paralelero a ratStates? una task puede cotener varias tareas. Además harían faltamás estados, como durmiendo. La velocidad también debería cambiar.
 
 namespace RatPet
 {
@@ -46,17 +47,15 @@ namespace RatPet
                 Content.Load<Texture2D>("blackpixel"),
                 parameters.boxBorders);
 
-            var rat = new Rat(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
-                Content,
+            var rat = new Rat(Content,
                 box,
                 parameters.topFramesAnimation,
                 parameters.statesFileName,
                 parameters.scale,
                 parameters.defaultSpeed);
 
-            var cheesePool = new CheesePool(box.Position,
-                Content.Load<Texture2D>("cheese2"),
-                box.Rectangle,
+            var cheesePool = new CheesePool(Content.Load<Texture2D>("cheese2"),
+                box,
                 rat,
                 parameters.reduceCollisionX,
                 parameters.reduceCollisionY,

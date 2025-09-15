@@ -42,15 +42,13 @@ namespace RatPet.VisualControllers
         private float reduceFactorY;
         private int speed;
         private int fallingPositionY;
-        private Rectangle area;
 
-        public Cheese(Vector2 position, Texture2D texture,  Rectangle area, float reduceFactorX, float reduceFactorY, int speed, float scaleFactor = 1f) 
-            : base(position, texture, scaleFactor) 
+        public Cheese(Vector2 position, Texture2D texture, Visual container, float reduceFactorX, float reduceFactorY, int speed, float scaleFactor = 1f) 
+            : base(texture, scaleFactor, null, container, position) 
         {
             this.reduceFactorX = reduceFactorX;
             this.reduceFactorY = reduceFactorY;
             this.speed = speed;
-            this.area = area;
             SetNewPosition();
         }
 
@@ -59,18 +57,18 @@ namespace RatPet.VisualControllers
             Random rdn = new Random();
             base.Position = new Vector2(
                 rdn.Next(
-                    (int)area.Location.X + (base.Rectangle.Width/2), 
-                    (int)area.Location.X + area.Width - (base.Rectangle.Width/2)),
+                    (int)container.Rectangle.Location.X + (base.Rectangle.Width/2), 
+                    (int)container.Rectangle.Location.X + container.Rectangle.Width - (base.Rectangle.Width/2)),
                 rdn.Next(
-                    (int)area.Location.Y + (base.Rectangle.Height/2), 
-                    (int)area.Location.Y + area.Height - (base.Rectangle.Height/2)));
-            scale = Helper.GetScale(base.Position.Y, defaultScale, area);
+                    (int)container.Rectangle.Location.Y + (base.Rectangle.Height/2), 
+                    (int)container.Rectangle.Location.Y + container.Rectangle.Height - (base.Rectangle.Height/2)));
+            scale = Helper.GetScale(base.Position.Y, defaultScale, container.Rectangle);
             fallingPositionY = 0;
         }
 
-        public bool Collision(Visual visual)
+        public override Vector2? Collision(Visual visual)
         {
-            return Rectangle.Intersects(visual.Rectangle);
+            return Rectangle.Intersects(visual.Rectangle) ? new Vector2(Rectangle.Center.X, Rectangle.Center.Y) : null;
         }
 
         public override void Update()
