@@ -57,6 +57,7 @@ namespace RatPet
             var cheesePool = new CheesePool(Content.Load<Texture2D>("cheese2"),
                 box,
                 rat,
+                Content.Load<SpriteFont>("DefaultFont"),
                 parameters.reduceCollisionX,
                 parameters.reduceCollisionY,
                 parameters.fallingSpeed,

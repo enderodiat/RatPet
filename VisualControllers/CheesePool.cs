@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RatPet.VisualControllers
 {
@@ -14,14 +15,17 @@ namespace RatPet.VisualControllers
         private int speed;
         private int topFrames;
         private int framesUntilNewCheese;
+        private int eatenCheese = 0;
+        private SpriteFont font;
         
-        public CheesePool(Texture2D texture, Visual box, Visual rat, float reduceFactorX, float reduceFactorY, int speed, int topFrames, float scaleFactor = 1f) 
+        public CheesePool(Texture2D texture, Visual box, Visual rat, SpriteFont font, float reduceFactorX, float reduceFactorY, int speed, int topFrames, float scaleFactor = 1f) 
             : base(texture, scaleFactor, rat, box, null, box.Rectangle)
         {
             this.reduceFactorX = reduceFactorX;
             this.reduceFactorY = reduceFactorY;
             this.speed = speed;
             this.topFrames = topFrames;
+            this.font = font;
             this.pool = new List<Visual>();
             this.framesUntilNewCheese = 0;
         }
@@ -48,6 +52,19 @@ namespace RatPet.VisualControllers
             {
                 cheese.Draw(spritebatch);
             }
+
+            int textScale = 3;
+            Vector2 size = font.MeasureString(eatenCheese.ToString());
+            spritebatch.DrawString(
+                font, 
+                eatenCheese.ToString(), 
+                new Vector2(this.container.Rectangle.Right, this.container.Rectangle.Top),
+                new Color(Color.Black, 1f), 
+                0,
+                new Vector2(size.X, 0),
+                textScale, 
+                SpriteEffects.None, 
+                0f);
         }
 
         private void updateCheese()
@@ -66,6 +83,7 @@ namespace RatPet.VisualControllers
                 if (cheese.Collision(visual).HasValue)
                 {
                     cheeseToDelete.Add(cheese);
+                    eatenCheese++;
                 }
             }
             foreach(var cheese in cheeseToDelete)

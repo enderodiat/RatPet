@@ -37,6 +37,13 @@
 /processorParam:TextureFormat=Color
 /build:cheese2.png
 
+#begin DefaultFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:DefaultFont.spritefont
+
 #begin rat1.png
 /importer:TextureImporter
 /processor:TextureProcessor
