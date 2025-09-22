@@ -44,6 +44,9 @@
 /processorParam:TextureFormat=Color
 /build:DefaultFont.spritefont
 
+#begin font.ttf
+/copy:font.ttf
+
 #begin rat1.png
 /importer:TextureImporter
 /processor:TextureProcessor

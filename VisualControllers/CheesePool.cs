@@ -53,7 +53,7 @@ namespace RatPet.VisualControllers
                 cheese.Draw(spritebatch);
             }
 
-            int textScale = 3;
+            int textScale = 4;
             Vector2 size = font.MeasureString(eatenCheese.ToString());
             spritebatch.DrawString(
                 font, 

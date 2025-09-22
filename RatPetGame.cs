@@ -6,7 +6,10 @@ using RatPet.VisualControllers;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+// TODO: ajustar la position y el rectangle de rat según el estado para que siempre gire con respecto al centro del cuerpo
+
 // TODO: escalar velocidad
+// TODO: retocar sprite de subida
 // TODO: pasar los métodos get a propiedades públicas?
 // TODO: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
 // TODO: strings que uso para acceder al appsettings pasar a constantes? clase singleton para pasar los valores?
