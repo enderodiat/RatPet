@@ -36,6 +36,11 @@ namespace RatPet
 
         protected override void Initialize()
         {
+            //Original resolution 800x480
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 600;
+            _graphics.ApplyChanges();
+
             base.Initialize();
         }
 
@@ -45,10 +50,21 @@ namespace RatPet
 
             Parameters parameters = new Parameters();
 
-            var box = new Box(new Vector2(parameters.padding, parameters.padding), 
-                GraphicsDevice.Viewport,
+            var scoreBoard = new CheeseScore(GraphicsDevice.Viewport,
+                Content.Load<Texture2D>("cheeseScore"),
+                Content.Load<Texture2D>("tinyCheese"),
+                Content.Load<SpriteFont>("DefaultFont"),
+                parameters.scorePaddingTop,
+                parameters.scorePaddingRight,
+                parameters.uiScale);
+
+            var box = new Box(GraphicsDevice.Viewport,
                 Content.Load<Texture2D>("blackpixel"),
-                parameters.boxBorders);
+                parameters.boxBorders,
+                parameters.ratAreaPaddingTop,
+                parameters.ratAreaPaddingRight,
+                parameters.ratAreaPaddingLeft,
+                parameters.ratAreaPaddingBottom);
 
             var rat = new Rat(Content,
                 box,
@@ -67,7 +83,7 @@ namespace RatPet
                 parameters.mediaFramesPerCheese,
                 parameters.scale);
 
-            visuals = new List<Visual>() { box, rat, cheesePool };
+            visuals = new List<Visual>() { scoreBoard, box, rat, cheesePool };
         }
 
         protected override void Update(GameTime gameTime)

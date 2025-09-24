@@ -5,21 +5,21 @@ namespace RatPet.VisualControllers
 {
     public class Box : Visual
     {
-        private const int width = 1;
+        private const int thickness = 1;
         private List<Visual> lines;
         private bool drawBorders;
 
-        public Box(Vector2 position, Viewport window,  Texture2D texture, bool drawBorders, float scaleFactor = 1f) :  base(texture, scaleFactor, null, null, position)
+        public Box(Viewport window, Texture2D texture, bool drawBorders, int paddingTop, int paddingRight, int paddingLeft, int paddingBottom, float scaleFactor = 1f) 
+            : base(texture, scaleFactor, null, null, new Vector2(paddingLeft, paddingTop))
         {
-            int margin = (int)position.X;
             this.lines = new List<Visual>()
             {
-                createLine(margin, margin, width, window.Height - 2 * margin, texture),
-                createLine(margin, margin, window.Width - 2 * margin, width, texture),
-                createLine(window.Width - margin, margin, width, window.Height - 2 * margin, texture),
-                createLine(margin, window.Height - margin, window.Width - 2 * margin + width, width, texture)
+                createLine(paddingLeft, paddingTop, thickness, window.Height - paddingTop - paddingBottom, texture),
+                createLine(paddingLeft, paddingTop, window.Width - paddingRight - paddingLeft, thickness, texture),
+                createLine(window.Width - paddingRight, paddingTop, thickness, window.Height - paddingTop - paddingBottom, texture),
+                createLine(paddingLeft, window.Height - paddingBottom, window.Width - paddingLeft - paddingRight + thickness, thickness, texture)
             };
-            this.Rectangle = new Rectangle(margin, margin, window.Width - (2*margin), window.Height - 2*margin);
+            this.Rectangle = new Rectangle(paddingLeft, paddingTop, window.Width - paddingLeft - paddingRight, window.Height - paddingTop - paddingBottom);
             this.drawBorders = drawBorders;
         }
 

@@ -9,12 +9,18 @@ namespace RatPet.Helpers
 {
     public class Parameters
     {
-        public int padding;
+        public int ratAreaPaddingTop;
+        public int ratAreaPaddingRight;
+        public int ratAreaPaddingLeft;
+        public int ratAreaPaddingBottom;
+        public int scorePaddingTop;
+        public int scorePaddingRight;
         public int topFramesAnimation;
         public int mediaFramesPerCheese;
         public int defaultSpeed;
         public int fallingSpeed;
         public float scale;
+        public float uiScale;
         public float reduceCollisionY;
         public float reduceCollisionX;
         public string statesFileName;
@@ -22,7 +28,13 @@ namespace RatPet.Helpers
         public bool boxBorders;
         public Parameters()
         {
-            padding = int.Parse(ConfigurationManager.AppSettings["areaRatPadding"]);
+            ratAreaPaddingTop = int.Parse(ConfigurationManager.AppSettings["areaRatPaddingTop"]);
+            ratAreaPaddingRight = int.Parse(ConfigurationManager.AppSettings["areaRatPaddingRight"]);
+            ratAreaPaddingLeft = int.Parse(ConfigurationManager.AppSettings["areaRatPaddingLeft"]);
+            ratAreaPaddingBottom = int.Parse(ConfigurationManager.AppSettings["areaRatPaddingBottom"]);
+            scorePaddingTop = int.Parse(ConfigurationManager.AppSettings["scorePaddingTop"]);
+            scorePaddingRight = int.Parse(ConfigurationManager.AppSettings["scorePaddingRight"]);
+            uiScale = float.Parse(ConfigurationManager.AppSettings["uiScale"]);
             topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
             mediaFramesPerCheese = int.Parse(ConfigurationManager.AppSettings["mediaFramesPerNewCheese"]);
             defaultSpeed = int.Parse(ConfigurationManager.AppSettings["defaultSpeed"]);
