@@ -76,7 +76,7 @@ namespace RatPet.VisualControllers
             fallingPositionY += speed;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null)
+        public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null, float? layer = null)
         {
             base.Draw(spriteBatch, flip, this.Position);
         }

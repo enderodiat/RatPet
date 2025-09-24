@@ -17,8 +17,9 @@ namespace RatPet.VisualControllers
         private int framesUntilNewCheese;
         private int eatenCheese = 0;
         private SpriteFont font;
+        private CheeseScore scoreBoard;
         
-        public CheesePool(Texture2D texture, Visual box, Visual rat, SpriteFont font, float reduceFactorX, float reduceFactorY, int speed, int topFrames, float scaleFactor = 1f) 
+        public CheesePool(Texture2D texture, Visual box, Visual rat, SpriteFont font, float reduceFactorX, float reduceFactorY, int speed, int topFrames, CheeseScore scoreBoard, float scaleFactor = 1f) 
             : base(texture, scaleFactor, rat, box, null, box.Rectangle)
         {
             this.reduceFactorX = reduceFactorX;
@@ -28,6 +29,7 @@ namespace RatPet.VisualControllers
             this.font = font;
             this.pool = new List<Visual>();
             this.framesUntilNewCheese = 0;
+            this.scoreBoard = scoreBoard;
         }
 
         public override void Update()
@@ -44,27 +46,15 @@ namespace RatPet.VisualControllers
             }
             deleteCheese(this.collider);
             updateCheese();
+            scoreBoard.score = eatenCheese;
         }
 
-        public override void Draw(SpriteBatch spritebatch, bool flip = false, Vector2? position = null)
+        public override void Draw(SpriteBatch spritebatch, bool flip = false, Vector2? position = null, float? layer = null)
         {
             foreach (var cheese in pool)
             {
                 cheese.Draw(spritebatch);
             }
-
-            int textScale = 4;
-            Vector2 size = font.MeasureString(eatenCheese.ToString());
-            spritebatch.DrawString(
-                font, 
-                eatenCheese.ToString(), 
-                new Vector2(this.container.Rectangle.Right, this.container.Rectangle.Top),
-                new Color(Color.Black, 1f), 
-                0,
-                new Vector2(size.X, 0),
-                textScale, 
-                SpriteEffects.None, 
-                0f);
         }
 
         private void updateCheese()

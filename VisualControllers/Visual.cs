@@ -71,10 +71,10 @@ namespace RatPet.VisualControllers
             } 
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null)
+        public virtual void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null, float? alternativeLayer = null)
         {
             var bottomPosition = this.Position.Y + this.Rectangle.Height/2;
-            var layer = 1 / bottomPosition;
+            var layer = alternativeLayer.HasValue ? alternativeLayer.Value : 1 / bottomPosition;
             spriteBatch.Draw(
                 this.actualTexture,
                 alternativePosition.HasValue ? alternativePosition.Value : this.Position,

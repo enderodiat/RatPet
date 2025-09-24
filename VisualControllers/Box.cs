@@ -28,7 +28,7 @@ namespace RatPet.VisualControllers
             return new Visual(this.actualTexture, 1f, null, null, new Vector2(x, y), new Rectangle(x, y, width, height));
         }
 
-        public override void Draw(SpriteBatch spritebatch, bool flip = false, Vector2? position = null)
+        public override void Draw(SpriteBatch spritebatch, bool flip = false, Vector2? position = null, float? layer = null)
         {
             if (drawBorders)
             {

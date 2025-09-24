@@ -56,6 +56,9 @@ namespace RatPet
                 Content.Load<SpriteFont>("DefaultFont"),
                 parameters.scorePaddingTop,
                 parameters.scorePaddingRight,
+                parameters.tinyCheesePaddingLeft,
+                parameters.scoreCheeseTextPaddingRight,
+                parameters.scoreCheeseTextPaddingTop,
                 parameters.uiScale);
 
             var box = new Box(GraphicsDevice.Viewport,
@@ -81,6 +84,7 @@ namespace RatPet
                 parameters.reduceCollisionY,
                 parameters.fallingSpeed,
                 parameters.mediaFramesPerCheese,
+                scoreBoard,
                 parameters.scale);
 
             visuals = new List<Visual>() { scoreBoard, box, rat, cheesePool };
