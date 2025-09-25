@@ -73,7 +73,10 @@ namespace RatPet.VisualControllers
 
         public override void Update()
         {
-            fallingPositionY += speed;
+            if(fallingPositionY <= base.Position.Y)
+            {
+                fallingPositionY += speed;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null, float? layer = null)

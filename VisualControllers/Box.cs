@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RatPet.Helpers;
 using System.Collections.Generic;
 namespace RatPet.VisualControllers
 {
@@ -9,18 +10,36 @@ namespace RatPet.VisualControllers
         private List<Visual> lines;
         private bool drawBorders;
 
-        public Box(Viewport window, Texture2D texture, bool drawBorders, int paddingTop, int paddingRight, int paddingLeft, int paddingBottom, float scaleFactor = 1f) 
-            : base(texture, scaleFactor, null, null, new Vector2(paddingLeft, paddingTop))
+        public Box(Viewport window, Texture2D texture, Parameters parameters) 
+            : base(texture, parameters.scale, null, null, new Vector2(parameters.ratAreaPaddingLeft, parameters.ratAreaPaddingTop))
         {
             this.lines = new List<Visual>()
             {
-                createLine(paddingLeft, paddingTop, thickness, window.Height - paddingTop - paddingBottom, texture),
-                createLine(paddingLeft, paddingTop, window.Width - paddingRight - paddingLeft, thickness, texture),
-                createLine(window.Width - paddingRight, paddingTop, thickness, window.Height - paddingTop - paddingBottom, texture),
-                createLine(paddingLeft, window.Height - paddingBottom, window.Width - paddingLeft - paddingRight + thickness, thickness, texture)
+                createLine(parameters.ratAreaPaddingLeft, 
+                    parameters.ratAreaPaddingTop, thickness, 
+                    window.Height - parameters.ratAreaPaddingTop - parameters.ratAreaPaddingBottom, 
+                    texture),
+                createLine(parameters.ratAreaPaddingLeft, 
+                    parameters.ratAreaPaddingTop, 
+                    window.Width - parameters.ratAreaPaddingRight - parameters.ratAreaPaddingLeft, 
+                    thickness, 
+                    texture),
+                createLine(window.Width - parameters.ratAreaPaddingRight, 
+                    parameters.ratAreaPaddingTop, 
+                    thickness, 
+                    window.Height - parameters.ratAreaPaddingTop - parameters.ratAreaPaddingBottom, 
+                    texture),
+                createLine(parameters.ratAreaPaddingLeft, 
+                    window.Height - parameters.ratAreaPaddingBottom, 
+                    window.Width - parameters.ratAreaPaddingLeft - parameters.ratAreaPaddingRight + thickness, 
+                    thickness, 
+                    texture)
             };
-            this.Rectangle = new Rectangle(paddingLeft, paddingTop, window.Width - paddingLeft - paddingRight, window.Height - paddingTop - paddingBottom);
-            this.drawBorders = drawBorders;
+            this.Rectangle = new Rectangle(parameters.ratAreaPaddingLeft, 
+                parameters.ratAreaPaddingTop, 
+                window.Width - parameters.ratAreaPaddingLeft - parameters.ratAreaPaddingRight, 
+                window.Height - parameters.ratAreaPaddingTop - parameters.ratAreaPaddingBottom);
+            this.drawBorders = parameters.boxBorders;
         }
 
         private Visual createLine(int x, int y, int width, int height, Texture2D texture)

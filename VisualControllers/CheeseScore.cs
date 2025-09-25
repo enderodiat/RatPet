@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RatPet.Helpers;
+using System.Reflection.Metadata;
 
 namespace RatPet.VisualControllers
 {
@@ -11,18 +13,18 @@ namespace RatPet.VisualControllers
         private int textPaddingRight;
         private int textPaddingTop;
 
-        public CheeseScore(Viewport window, Texture2D boardTexture, Texture2D tinyCheeseTexture, SpriteFont font, int paddingTop, int paddingRight, int tinyCheesePaddingLeft, int textPaddingRight, int textPaddingTop, float scaleFactor = 1) 
-            : base(boardTexture, scaleFactor)
+        public CheeseScore(Viewport window, Texture2D boardTexture, Texture2D tinyCheeseTexture, SpriteFont font, Parameters parameters)
+            : base(boardTexture, parameters.uiScale)
         {
-            this.textPaddingTop = textPaddingTop;
-            this.textPaddingRight = textPaddingRight;  
+            this.textPaddingTop = parameters.scoreCheeseTextPaddingTop;
+            this.textPaddingRight = parameters.scoreCheeseTextPaddingRight;  
             this.font = font;
-            this.Position = new Vector2(window.Width - paddingRight - this.Rectangle.Width/2, paddingTop + this.Rectangle.Height/2);
+            this.Position = new Vector2(window.Width - parameters.scorePaddingRight - this.Rectangle.Width/2, parameters.scorePaddingTop + this.Rectangle.Height/2);
             this.tinyCheese = new Visual(tinyCheeseTexture,
-                scaleFactor,
+                parameters.uiScale,
                 null,
                 this,
-                new Vector2(this.Rectangle.Left + tinyCheesePaddingLeft + (tinyCheeseTexture.Width * scaleFactor / 2), this.Rectangle.Center.Y));
+                new Vector2(this.Rectangle.Left + parameters.tinyCheesePaddingLeft + (tinyCheeseTexture.Width * parameters.uiScale / 2), this.Rectangle.Center.Y));
         }
 
         public override void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null, float? layer = null)

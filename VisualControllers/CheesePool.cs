@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using RatPet.Helpers;
 using System;
 using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
@@ -16,17 +17,15 @@ namespace RatPet.VisualControllers
         private int topFrames;
         private int framesUntilNewCheese;
         private int eatenCheese = 0;
-        private SpriteFont font;
         private CheeseScore scoreBoard;
         
-        public CheesePool(Texture2D texture, Visual box, Visual rat, SpriteFont font, float reduceFactorX, float reduceFactorY, int speed, int topFrames, CheeseScore scoreBoard, float scaleFactor = 1f) 
-            : base(texture, scaleFactor, rat, box, null, box.Rectangle)
+        public CheesePool(Texture2D texture, Visual box, Visual rat, Parameters parameters, CheeseScore scoreBoard) 
+            : base(texture, parameters.scale, rat, box, null, box.Rectangle)
         {
-            this.reduceFactorX = reduceFactorX;
-            this.reduceFactorY = reduceFactorY;
-            this.speed = speed;
-            this.topFrames = topFrames;
-            this.font = font;
+            this.reduceFactorX = parameters.reduceCollisionX;
+            this.reduceFactorY = parameters.reduceCollisionY;
+            this.speed = parameters.fallingSpeed;
+            this.topFrames = parameters.topFramesPerCheese;
             this.pool = new List<Visual>();
             this.framesUntilNewCheese = 0;
             this.scoreBoard = scoreBoard;

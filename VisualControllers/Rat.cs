@@ -15,12 +15,11 @@ namespace RatPet.VisualControllers
         private RatStates ratStates;
         private RatState actualState;
 
-        public Rat(ContentManager content, Visual box, int topFrames, string statesFileName, float scaleFactor = 1, int speed = 0, Texture2D texture = null) 
-            : base(texture, scaleFactor, box, box)
-        {
-            this.speed = speed;
-            defaultSpeed = speed;
-            ratStates = new RatStates(statesFileName, content, topFrames);
+        public Rat(ContentManager content, Visual box, Parameters parameters, Texture2D texture = null) : base(texture, parameters.scale, box, box)
+        {                
+            this.speed = parameters.defaultSpeed;
+            defaultSpeed = parameters.defaultSpeed;
+            ratStates = new RatStates(parameters.statesFileName, content, parameters.topFramesAnimation);
             actualState = ratStates.States.Where(state => state.numState == State.goingRight).First();
             actualTexture = actualState.GetTexture();
         }
