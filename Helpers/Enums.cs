@@ -2,7 +2,7 @@
 {
     public static class Enums
     {
-        public enum State
+        public enum RatStateID
         {
             goingRight,
             goingLeft,
@@ -17,6 +17,14 @@
             up,
             left,
             down
+        }
+
+        public enum CheeseStateID
+        {
+            falling,
+            chilling,
+            going,
+            deleted
         }
     }
 }

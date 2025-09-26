@@ -9,7 +9,7 @@ namespace RatPet.VisualControllers
 {
     public class RatState
     {
-        public State numState;
+        public RatStateID numState;
         public Direction direction;
         public Direction previousHorizontalDirection;
         public Keys keyToActivate;
@@ -25,7 +25,7 @@ namespace RatPet.VisualControllers
 
         public RatState(XElement state, ContentManager content, int topFramesAnimation)
         {
-            numState = (State)int.Parse(state.Elements(nameof(numState)).First().Attribute("value").Value);
+            numState = (RatStateID)int.Parse(state.Elements(nameof(numState)).First().Attribute("value").Value);
             direction = (Direction)int.Parse(state.Elements(nameof(direction)).First().Attribute("value").Value);
             keyToActivate = (Keys)int.Parse(state.Elements(nameof(keyToActivate)).First().Attribute("value").Value);
             texture1 = content.Load<Texture2D>(state.Elements(nameof(texture1)).First().Attribute("value").Value);

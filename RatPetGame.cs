@@ -6,6 +6,9 @@ using RatPet.VisualControllers;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+//TODO: mejorar el movimiento de los cheeses en estado going, que se calcule en función de la hipotenusa y no en función del eje X
+//TODO: mejorar los layers de marcador etc, que los quesos lluevan por encima. Tal vez la clave sea reservar de 0 a 0,5 para la zona superior y de 0,5 a 1 para la ratzone
+
 // TODO: escalar velocidad
 // TODO: pasar los métodos get a propiedades públicas?
 // TODO: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state

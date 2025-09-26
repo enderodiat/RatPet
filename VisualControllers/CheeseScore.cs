@@ -8,7 +8,7 @@ namespace RatPet.VisualControllers
     public class CheeseScore : Visual
     {
         public int score = 0;
-        private Visual tinyCheese;
+        public Visual tinyCheese;
         private SpriteFont font;
         private int textPaddingRight;
         private int textPaddingTop;

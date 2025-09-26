@@ -20,7 +20,7 @@ namespace RatPet.VisualControllers
             this.speed = parameters.defaultSpeed;
             defaultSpeed = parameters.defaultSpeed;
             ratStates = new RatStates(parameters.statesFileName, content, parameters.topFramesAnimation);
-            actualState = ratStates.States.Where(state => state.numState == State.goingRight).First();
+            actualState = ratStates.States.Where(state => state.numState == RatStateID.goingRight).First();
             actualTexture = actualState.GetTexture();
         }
 
