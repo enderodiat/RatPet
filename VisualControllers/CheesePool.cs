@@ -53,7 +53,7 @@ namespace RatPet.VisualControllers
             scoreBoard.score = eatenCheese;
         }
 
-        public override void Draw(SpriteBatch spritebatch, bool flip = false, Vector2? position = null, float? layer = null)
+        public override void Draw(SpriteBatch spritebatch, bool flip = false, Vector2? position = null, float? layer = null, float transparencyFactor = 1)
         {
             foreach (var cheese in pool)
             {

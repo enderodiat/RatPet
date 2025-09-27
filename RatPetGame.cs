@@ -6,15 +6,15 @@ using RatPet.VisualControllers;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-//TODO: mejorar el movimiento de los cheeses en estado going, que se calcule en función de la hipotenusa y no en función del eje X
-//TODO: mejorar los layers de marcador etc, que los quesos lluevan por encima. Tal vez la clave sea reservar de 0 a 0,5 para la zona superior y de 0,5 a 1 para la ratzone
 
-// TODO: escalar velocidad
+// TODO: Función go to the point, para clickar en pantalla y que la rata camine
+
+// TODO: mejorar los layers de marcador etc, que los quesos lluevan por encima. Tal vez la clave sea reservar de 0 a 0,5 para la zona superior y de 0,5 a 1 para la ratzone
+// TODO: escalar ratspeed
 // TODO: pasar los métodos get a propiedades públicas?
 // TODO: debería ver que propiedades publicas uso de state para delegar esa lógica a la clase state
 // TODO: strings que uso para acceder al appsettings pasar a constantes? clase singleton para pasar los valores?
 // TODO: Objeto pantalla que conste de box, botonera y background, todo lo inamovible en pantalla
-// TODO: Función go to the point, para clickar en pantalla y que la rata camine
 // TODO: crear brainRat, tal vez utilizar ratTasks? algo paralelero a ratStates? una task puede cotener varias tareas. Además harían faltamás estados, como durmiendo. La velocidad también debería cambiar.
 
 namespace RatPet
@@ -89,7 +89,7 @@ namespace RatPet
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend);
 
             visuals.ForEach(visual => visual.Draw(_spriteBatch));
 

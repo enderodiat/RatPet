@@ -34,7 +34,7 @@ namespace RatPet.VisualControllers
             scale = Helper.GetScale(Position.Y, defaultScale, this.collider.Rectangle); 
         }
 
-        public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null, float? layer = null)
+        public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null, float? layer = null, float transparencyFactor = 1)
         {
             base.Draw(spriteBatch, actualState.needToFlip);
         }

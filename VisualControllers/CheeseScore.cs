@@ -26,7 +26,7 @@ namespace RatPet.VisualControllers
                 new Vector2(this.Rectangle.Left + parameters.tinyCheesePaddingLeft + (tinyCheeseTexture.Width * parameters.uiScale / 2), this.Rectangle.Center.Y));
         }
 
-        public override void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null, float? layer = null)
+        public override void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null, float? layer = null, float transparencyFactor = 1)
         {            
             base.Draw(spriteBatch, flipTexture, alternativePosition, 0.9999f);
 

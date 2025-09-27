@@ -71,7 +71,7 @@ namespace RatPet.VisualControllers
             } 
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null, float? alternativeLayer = null)
+        public virtual void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null, float? alternativeLayer = null, float transparencyFactor = 1)
         {
             var bottomPosition = this.Position.Y + this.Rectangle.Height/2;
             var layer = alternativeLayer.HasValue ? alternativeLayer.Value : 1 / bottomPosition;
@@ -79,7 +79,7 @@ namespace RatPet.VisualControllers
                 this.actualTexture,
                 alternativePosition.HasValue ? alternativePosition.Value : this.Position,
                 null,
-                Color.White,
+                Color.White * transparencyFactor,
                 0f,
                 new Vector2(this.actualTexture.Width/2, this.actualTexture.Height/2),
                 scale,

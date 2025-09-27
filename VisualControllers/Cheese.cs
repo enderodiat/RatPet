@@ -121,9 +121,9 @@ namespace RatPet.VisualControllers
             } 
         }
 
-        public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null, float? layer = null)
+        public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null, float? layer = null, float transparencyFactor = 1)
         {
-            base.Draw(spriteBatch, flip, this.Position);
+            base.Draw(spriteBatch, flip, this.Position, null, this.state == CheeseStateID.going ? 0.8f : 1);
         }
     }
 }
