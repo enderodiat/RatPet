@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using RatPet.Helpers;
 using System;
@@ -38,17 +37,19 @@ namespace RatPet.VisualControllers
         public CheeseStateID state;
         private float reduceFactorX;
         private float reduceFactorY;
-        private int speed;
+        private int fallingSpeed;
+        private int goingSpeed;
         private float _positionY;
         private float _positionX;
         private float uiScale;
 
-        public Cheese(Vector2 position, Texture2D texture, Visual container, Visual collaider, float reduceFactorX, float reduceFactorY, int speed, float scaleFactor, float uiScale) 
+        public Cheese(Vector2 position, Texture2D texture, Visual container, Visual collaider, float reduceFactorX, float reduceFactorY, int fallingSpeed, int goingSpeed, float scaleFactor, float uiScale) 
             : base(texture, scaleFactor, collaider, container, position) 
         {
             this.reduceFactorX = reduceFactorX;
             this.reduceFactorY = reduceFactorY;
-            this.speed = speed;
+            this.fallingSpeed = fallingSpeed;
+            this.goingSpeed = goingSpeed;
             this.uiScale = uiScale;
             SetNewPosition();
             SetState(CheeseStateID.falling);
@@ -96,7 +97,7 @@ namespace RatPet.VisualControllers
                 case CheeseStateID.falling:
                     if (_positionY < base.Position.Y)
                     {
-                        _positionY += speed;
+                        _positionY += fallingSpeed;
                     }
                     else
                     {
@@ -104,13 +105,12 @@ namespace RatPet.VisualControllers
                     }
                     break;
                 case CheeseStateID.going:
-                    float x;
-                    float speedFactor = 4 * this.speed;
                     this.actualTexture = this.collider.actualTexture;
                     this.scale = this.uiScale;
                     Vector2 destinationPoint = new Vector2(this.collider.Position.X, this.collider.Position.Y);
                     float m = (destinationPoint.Y - this.Position.Y)/(destinationPoint.X - this.Position.X);
-                    x = this.Position.X < this.collider.Position.X ? this.Position.X + speedFactor : this.Position.X - speedFactor;
+                    float x = this.Position.X < this.collider.Position.X ? 
+                        (float)(this.Position.X + (this.goingSpeed / Math.Sqrt(1 + m * m))) : (float)(this.Position.X - (this.goingSpeed / Math.Sqrt(1 + m * m)));
                     float y = m * (x - this.Position.X) + this.Position.Y;
                     _positionX = x;
                     _positionY = y;
@@ -118,9 +118,7 @@ namespace RatPet.VisualControllers
                         SetState(CheeseStateID.deleted);
                     }
                     break;
-
-            }
-            
+            } 
         }
 
         public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null, float? layer = null)

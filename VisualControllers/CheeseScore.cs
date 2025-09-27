@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RatPet.Helpers;
-using System.Reflection.Metadata;
 
 namespace RatPet.VisualControllers
 {
@@ -29,9 +28,9 @@ namespace RatPet.VisualControllers
 
         public override void Draw(SpriteBatch spriteBatch, bool flipTexture = false, Vector2? alternativePosition = null, float? layer = null)
         {            
-            base.Draw(spriteBatch, flipTexture, alternativePosition);
+            base.Draw(spriteBatch, flipTexture, alternativePosition, 0.9999f);
 
-            this.tinyCheese.Draw(spriteBatch, false, null, 0f);
+            this.tinyCheese.Draw(spriteBatch, false, null, 0.999f);
 
             Vector2 size = font.MeasureString(score.ToString());
             spriteBatch.DrawString(
@@ -43,7 +42,7 @@ namespace RatPet.VisualControllers
                 new Vector2(size.X, 0),
                 this.scale,
                 SpriteEffects.None,
-                0f);
+                0.999f);
         }
     }
 }

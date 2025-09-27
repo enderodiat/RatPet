@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace RatPet.Helpers
 {
@@ -22,6 +17,7 @@ namespace RatPet.Helpers
         public int topFramesPerCheese;
         public int defaultSpeed;
         public int fallingSpeed;
+        public int cheeseGoingSpeed;
         public float scale;
         public float uiScale;
         public float reduceCollisionY;
@@ -45,6 +41,7 @@ namespace RatPet.Helpers
             topFramesPerCheese = int.Parse(ConfigurationManager.AppSettings["topFramesPerNewCheese"]);
             defaultSpeed = int.Parse(ConfigurationManager.AppSettings["defaultSpeed"]);
             fallingSpeed = int.Parse(ConfigurationManager.AppSettings["fallingSpeed"]);
+            cheeseGoingSpeed = int.Parse(ConfigurationManager.AppSettings["cheeseGoingSpeed"]);
             scale = float.Parse(ConfigurationManager.AppSettings["defaultScale"]);
             reduceCollisionY = float.Parse(ConfigurationManager.AppSettings["collisionCheeseReduceFactorY"]);
             reduceCollisionX = float.Parse(ConfigurationManager.AppSettings["collisionCheeseReduceFactorX"]);

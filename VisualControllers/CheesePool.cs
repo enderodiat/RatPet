@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using RatPet.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using static RatPet.Helpers.Enums;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace RatPet.VisualControllers
 {
@@ -15,7 +13,8 @@ namespace RatPet.VisualControllers
         private float reduceFactorX;
         private float reduceFactorY;
         private List<Cheese> pool;
-        private int speed;
+        private int fallingSpeed;
+        private int goingSpeed;
         private int topFrames;
         private int framesUntilNewCheese;
         private int eatenCheese = 0;
@@ -27,7 +26,8 @@ namespace RatPet.VisualControllers
         {
             this.reduceFactorX = parameters.reduceCollisionX;
             this.reduceFactorY = parameters.reduceCollisionY;
-            this.speed = parameters.fallingSpeed;
+            this.fallingSpeed = parameters.fallingSpeed;
+            this.goingSpeed = parameters.cheeseGoingSpeed;
             this.topFrames = parameters.topFramesPerCheese;
             this.pool = new List<Cheese>();
             this.framesUntilNewCheese = 0;
@@ -41,7 +41,7 @@ namespace RatPet.VisualControllers
             {
                 Random random = new Random();
                 framesUntilNewCheese = random.Next(topFrames);
-                pool.Add(new Cheese(new Vector2(0, 0), this.actualTexture, this.container, this.scoreBoard.tinyCheese, reduceFactorX, reduceFactorY, speed, scale, uiScale));
+                pool.Add(new Cheese(new Vector2(0, 0), this.actualTexture, this.container, this.scoreBoard.tinyCheese, reduceFactorX, reduceFactorY, fallingSpeed, goingSpeed, scale, uiScale));
             }
             else
             {
@@ -75,7 +75,6 @@ namespace RatPet.VisualControllers
             {
                 if (cheese.Collision(collider).HasValue)
                 {
-                    eatenCheese++;
                     cheese.SetState(CheeseStateID.going);
                 }
             }
@@ -83,6 +82,7 @@ namespace RatPet.VisualControllers
 
         private void deleteCheeses()
         {
+            eatenCheese += pool.Where(cheese => cheese.state == CheeseStateID.deleted).Count();
             pool.RemoveAll(cheese => cheese.state == CheeseStateID.deleted);
         }
     }
