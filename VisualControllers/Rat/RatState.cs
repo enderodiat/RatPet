@@ -5,7 +5,7 @@ using System.Linq;
 using System.Xml.Linq;
 using static RatPet.Helpers.Enums;
 
-namespace RatPet.VisualControllers
+namespace RatPet.VisualControllers.Rat
 {
     public class RatState
     {

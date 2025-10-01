@@ -13,6 +13,7 @@ namespace RatPet.Helpers
         public int tinyCheesePaddingLeft;
         public int scoreCheeseTextPaddingRight;
         public int scoreCheeseTextPaddingTop;
+        public int clickMousePadding;
         public int topFramesAnimation;
         public int topFramesPerCheese;
         public int defaultSpeed;
@@ -36,6 +37,7 @@ namespace RatPet.Helpers
             tinyCheesePaddingLeft = int.Parse(ConfigurationManager.AppSettings["tinyCheesePaddingLeft"]);
             scoreCheeseTextPaddingRight = int.Parse(ConfigurationManager.AppSettings["scoreCheeseTextPaddingRight"]);
             scoreCheeseTextPaddingTop = int.Parse(ConfigurationManager.AppSettings["scoreCheeseTextPaddingTop"]);
+            clickMousePadding = int.Parse(ConfigurationManager.AppSettings["clickMousePadding"]);
             uiScale = float.Parse(ConfigurationManager.AppSettings["uiScale"]);
             topFramesAnimation = int.Parse(ConfigurationManager.AppSettings["topFramesPerSpriteAnimation"]);
             topFramesPerCheese = int.Parse(ConfigurationManager.AppSettings["topFramesPerNewCheese"]);

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RatPet.Helpers;
 using RatPet.VisualControllers;
+using RatPet.VisualControllers.Rat;
 using System.Collections.Generic;
 using System.Diagnostics;
 
