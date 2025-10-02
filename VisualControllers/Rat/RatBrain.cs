@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Xml.Linq;
+
 using static RatPet.Helpers.Enums;
 
 namespace RatPet.VisualControllers.Rat
@@ -14,28 +10,11 @@ namespace RatPet.VisualControllers.Rat
     public class RatBrain
     {
         public List<RatState> States { get; set; }
-
         private RatTask actualTask = null;
-        private int topFramesAnimation;
-        private List<Keys> allowedKeys;
-        private Dictionary<Keys, int> simultaneousKeys;
 
-        public RatBrain(string fileName, ContentManager content, int topFrames, int clickPadding) { 
-            simultaneousKeys = new Dictionary<Keys, int>();
-            States = new List<RatState>();
-            this.topFramesAnimation = topFrames;
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream(fileName))
-            {
-                XDocument doc = XDocument.Load(stream);
-                var states = doc.Descendants(typeof(RatState).Name);
-                foreach (var element in states)
-                {
-                    States.Add(new RatState(element, content, topFramesAnimation));
-                }
-            }
-            allowedKeys = new List<Keys>();
-            allowedKeys.AddRange(States.Select(state => state.keyToActivate).ToList());
+        public RatBrain(List<RatState> states)
+        {
+            this.States = states;
         }
 
         public RatState GetNewState(Vector2 position, Keys keyPressed, Rectangle? mousePositionPressed, RatState actualState)
@@ -104,40 +83,6 @@ namespace RatPet.VisualControllers.Rat
             {
                 this.actualTask.collision();
             }
-        }
-
-        public Keys GetAllowedKeyPressed(List<Keys> keysPressed)
-        {
-            keysPressed = allowedKeys.Intersect(keysPressed).ToList();
-            var keysUnpressed = allowedKeys.Except(keysPressed).ToList();
-            foreach (var key in keysUnpressed)
-            {
-                simultaneousKeys.Remove(key);
-            }
-            if (keysPressed.Count == 0) 
-            { 
-                return Keys.None;
-            }
-            else
-            {
-                return getNewerKey(keysPressed);
-            }
-        }
-
-        private Keys getNewerKey(List<Keys> keysPressed)
-        {
-            foreach (var key in keysPressed)
-            {
-                if (simultaneousKeys.ContainsKey(key))
-                {
-                    simultaneousKeys[key]++;
-                }
-                else
-                {
-                    simultaneousKeys.Add(key, 1);
-                }
-            }
-            return simultaneousKeys.OrderBy(k => k.Value).First().Key;
         }
     }
 }

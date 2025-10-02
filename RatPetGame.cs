@@ -7,9 +7,7 @@ using RatPet.VisualControllers.Rat;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-
-// TODO: Función go to the point, para clickar en pantalla y que la rata camine
-
+// TODO: hacer un fondo bastado en tonos amarillos, como tierra arenosa
 // TODO: mejorar los layers de marcador etc, que los quesos lluevan por encima. Tal vez la clave sea reservar de 0 a 0,5 para la zona superior y de 0,5 a 1 para la ratzone
 // TODO: escalar ratspeed
 // TODO: pasar los métodos get a propiedades públicas?

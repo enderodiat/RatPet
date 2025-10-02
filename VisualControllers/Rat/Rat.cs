@@ -3,8 +3,14 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RatPet.Helpers;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+
+using System.Xml.Linq;
+using System;
 using static RatPet.Helpers.Enums;
 
 namespace RatPet.VisualControllers.Rat
@@ -15,50 +21,30 @@ namespace RatPet.VisualControllers.Rat
         public float defaultSpeed;
         private RatBrain ratBrain;
         private RatState actualState;
-        private int clickPadding;
-        private ButtonState previousMouseState;
+        private List<RatState> ratStates;
+        private Gamepad controller;
+        private int topFramesAnimation;
 
         public Rat(ContentManager content, Visual box, Parameters parameters, Texture2D texture = null) : base(texture, parameters.scale, box, box)
         {
+            this.topFramesAnimation = parameters.topFramesAnimation;
             this.speed = parameters.defaultSpeed;
             this.defaultSpeed = parameters.defaultSpeed;
-            this.clickPadding = parameters.clickMousePadding;
-            this.ratBrain = new RatBrain(parameters.statesFileName, content, parameters.topFramesAnimation, parameters.clickMousePadding);
+            this.ratStates = loadRatStates(parameters.statesFileName, content);
+            this.ratBrain = new RatBrain(this.ratStates);
             this.actualState = this.ratBrain.States.Where(state => state.numState == RatStateID.goingRight).First();
             this.actualTexture = this.actualState.GetTexture();
+            this.controller = new Gamepad(parameters);
         }
 
         public override void Update()
         {
-            var mousePositionPressed = getValidMousePositionPressed();
-            var keyPressed = this.ratBrain.GetAllowedKeyPressed(Keyboard.GetState().GetPressedKeys().ToList());
+            var mousePositionPressed = this.controller.GetValidMousePositionPressed(this.container);
+            var keyPressed = this.controller.GetAllowedKeyPressed(this.ratStates);
             this.actualState = this.ratBrain.GetNewState(this.Position, keyPressed, mousePositionPressed, this.actualState);
             this.actualTexture = this.actualState.GetTexture();
             move();
             this.scale = Helper.GetScale(this.Position.Y, this.defaultScale, this.collider.Rectangle);
-        }
-
-        private Rectangle? getValidMousePositionPressed()
-        {
-            var mouseState = Mouse.GetState().LeftButton;
-            if (mouseState == ButtonState.Pressed && this.previousMouseState == ButtonState.Released)
-            {
-                this.previousMouseState = mouseState;
-                Vector2 mousePositionPressed = Mouse.GetState().Position.ToVector2();
-                if (this.container.Rectangle.Contains(mousePositionPressed))
-                {
-                    return new Rectangle((int)(mousePositionPressed.X - this.clickPadding/2),
-                        (int)(mousePositionPressed.Y - this.clickPadding/2), 
-                        this.clickPadding, 
-                        this.clickPadding);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            this.previousMouseState = mouseState;
-            return null;
         }
 
         public override void Draw(SpriteBatch spriteBatch, bool flip = false, Vector2? position = null, float? layer = null, float transparencyFactor = 1)
@@ -94,6 +80,22 @@ namespace RatPet.VisualControllers.Rat
                     return new Vector2(Position.X - speed, Position.Y);
             }
             return new Vector2(Position.X, Position.Y);
+        }
+
+        private List<RatState> loadRatStates(string fileName, ContentManager content)
+        {
+            var ratStates = new List<RatState>();
+            var assembly = Assembly.GetExecutingAssembly();
+            using (Stream stream = assembly.GetManifestResourceStream(fileName))
+            {
+                XDocument doc = XDocument.Load(stream);
+                var states = doc.Descendants(typeof(RatState).Name);
+                foreach (var element in states)
+                {
+                    ratStates.Add(new RatState(element, content, this.topFramesAnimation));
+                }
+            }
+            return ratStates;
         }
     }
 }
